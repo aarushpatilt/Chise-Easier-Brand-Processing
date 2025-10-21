@@ -22,7 +22,7 @@ export default function TopNav() {
         left: 0,
         width: "100%",
         height: "4rem",
-        backgroundColor: isScrolled ? "rgba(255,255,255,0.8)" : "transparent",
+        backgroundColor: isScrolled ? "rgba(255,255,255,0)" : "transparent",
         backdropFilter: isScrolled ? "blur(8px)" : "blur(0px)",
         WebkitBackdropFilter: isScrolled ? "blur(8px)" : "blur(0px)",
         boxShadow: "none",

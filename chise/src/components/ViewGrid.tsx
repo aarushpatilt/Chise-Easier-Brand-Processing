@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import BrandSheet from "./BrandSheet";
 
 type ViewGridProps = {
   urls: string[];
@@ -330,8 +331,8 @@ function FullscreenOverlay({
               height: "35px",
               width: "35px",
               borderRadius: "9999px",
-              background: "rgba(0,0,0,0.08)",
-              border: "1px solid rgba(0,0,0,0.2)",
+              background: "rgba(0,0,0,0.05)",
+              border: "1px solid rgba(0,0,0,0)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -357,8 +358,8 @@ function FullscreenOverlay({
                 height: "35px",
                 width: "35px",
                 borderRadius: "9999px",
-                background: "rgba(0,0,0,0.08)",
-                border: "1px solid rgba(0,0,0,0.2)",
+                background: "rgba(0,0,0,0.05)",
+                border: "1px solid rgba(0,0,0,0)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -383,8 +384,8 @@ function FullscreenOverlay({
                 height: "35px",
                 width: "35px",
                 borderRadius: "9999px",
-                background: "rgba(0,0,0,0.08)",
-                border: "1px solid rgba(0,0,0,0.2)",
+                background: "rgba(0,0,0,0.05)",
+                border: "1px solid rgba(0,0,0,0)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -403,17 +404,22 @@ function FullscreenOverlay({
           </div>
         </div>
 
-          <h3
+          <a
+            href={url}
+            target="_blank"
+            rel="noreferrer"
             style={{
+
               fontSize: "1rem",
               fontWeight: 600,
               marginBottom: "0.5rem",
               color: "#111",
               marginTop: "1rem",
+              textDecoration: "underline",
             }}
           >
             {host}
-          </h3>
+          </a>
           <p
             style={{
               fontSize: "0.9rem",
@@ -425,33 +431,81 @@ function FullscreenOverlay({
             Sample post describing the project. Thanks to partners and friends
             for support. Visit the website for more details.
           </p>
-          <a
-            href={url}
-            target="_blank"
-            rel="noreferrer"
-            style={{
-              color: "#111",
-              textDecoration: "underline",
-              fontSize: "0.9rem",
-              marginBottom: "1rem",
-              display: "inline-block",
-            }}
-          >
-            Open Website ↗
-          </a>
 
-          <div
+
+          <div style={{ display: "flex", gap: "0.4rem", marginBottom: "0rem" }}>
+            <div
+              style={{
+                background: "rgba(var(--foreground-rgb, 0,0,0), 0.05)",
+                color: "var(--foreground)",
+                borderRadius: "15px",
+                padding: "0.24rem 0.7rem",
+                fontWeight: 500,
+                fontSize: "0.7rem",
+                display: "flex",
+                alignItems: "center",
+                minHeight: "1.2rem",
+              }}
+            >
+              Pop-Up
+            </div>
+            <div
+              style={{
+                background: "rgba(var(--foreground-rgb, 0,0,0), 0.05)",
+                color: "var(--foreground)",
+                borderRadius: "15px",
+                padding: "0.24rem 0.7rem",
+                fontWeight: 500,
+                fontSize: "0.7rem",
+                display: "flex",
+                alignItems: "center",
+                minHeight: "1.2rem",
+              }}
+            >
+              $1,000
+            </div>
+            <div
+              style={{
+                background: "rgba(var(--foreground-rgb, 0,0,0), 0.05)",
+                color: "var(--foreground)",
+                borderRadius: "15px",
+                padding: "0.24rem 0.7rem",
+                fontWeight: 500,
+                fontSize: "0.7rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.12rem",
+                minHeight: "1.2rem",
+              }}
+            >
+              4.9
+              <svg
+                width="11"
+                height="11"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                style={{ color: "#f6c425", marginLeft: "0.08rem" }}
+                aria-label="star"
+              >
+                <path d="M12 17.25l-6.16 3.73 1.64-7.04L2 9.51l7.19-.61L12 2.5l2.81 6.4 7.19.61-5.48 4.43 1.64 7.04z" />
+              </svg>
+            </div>
+          </div>
+
+          <hr
             style={{
-              borderTop: "1px solid rgba(0,0,0,0.1)",
-              margin: "1rem 0",
+              border: "none",
+              borderTop: "1px solid rgba(0,0,0,0.11)",
+              margin: "1.2rem 0",
+              width: "100%",
             }}
           />
-
+{/* 
           <h4 style={{ marginBottom: "0.75rem", fontSize: "0.95rem", color: "#222" }}>
             06 Connections
-          </h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-            {["Parallel Universe", "Emerge", "Graphic Matters"].map((name, i) => (
+          </h4> */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "0rem", justifyContent: "flex-end", flex: 1 }}>
+            {["Start Applicaiton"].map((name, i) => (
               <div
                 key={i}
                 style={{
@@ -459,8 +513,8 @@ function FullscreenOverlay({
                   alignItems: "center",
                   gap: "0.75rem",
                   padding: "0.7rem 0.9rem",
-                  background: "rgba(0,0,0,0.04)",
-                  border: "1px solid rgba(0,0,0,0.08)",
+                  background: "rgba(0,0,0,0.05)",
+                  border: "1px solid rgba(0,0,0,0.0)",
                   borderRadius: "14px",
                 }}
               >
@@ -469,13 +523,16 @@ function FullscreenOverlay({
                     width: "32px",
                     height: "32px",
                     borderRadius: "50%",
-                    background: `hsl(${i * 60}, 90%, 30%)`,
+                    background: "none",
+                    backgroundImage: "url('https://cdn.cosmos.so/ce8cf745-50c1-4e89-99a7-9ac7dbd0a5ca?format=jpeg')",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
                   }}
                 />
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <span style={{ color: "#111", fontSize: "0.9rem" }}>{name}</span>
                   <span style={{ fontSize: "0.8rem", color: "#444", opacity: 0.75 }}>
-                    {200 - i * 25} elements
+                   
                   </span>
                 </div>
               </div>
@@ -483,6 +540,7 @@ function FullscreenOverlay({
           </div>
         </aside>
       </div>
+
     </div>
   );
 }

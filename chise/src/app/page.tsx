@@ -14,6 +14,8 @@ export default function Home() {
     <>
       <TopNav />
       <SideNav />
+      
+      
 
       {/* Landing section (normal flow, not fixed) */}
       <section
