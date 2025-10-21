@@ -35,7 +35,7 @@ export default function Home() {
             top: "4rem",
             left: "3rem",
             right: 0,
-            width: "100%",
+            width: "97vw",
             overflowX: "auto",
             whiteSpace: "nowrap",
             zIndex: 0,
@@ -117,7 +117,7 @@ export default function Home() {
               width: "auto",
               height: "90vh",
               objectFit: "cover",
-              marginRight: "1rem",
+             
               opacity: 1,
               verticalAlign: "top",
             }}
@@ -173,7 +173,7 @@ export default function Home() {
 
             fontSize: "1rem",
             color: "var(--foreground)",
-            maxWidth: "1200px",
+          
           }}
         >
           The latest collection of brands.
