@@ -33,9 +33,9 @@ export default function Home() {
           style={{
             position: "absolute",
             top: "4rem",
-            left: "3rem",
+            
             right: 0,
-            width: "97vw",
+            width: "100vw",
             overflowX: "auto",
             whiteSpace: "nowrap",
             zIndex: 0,
