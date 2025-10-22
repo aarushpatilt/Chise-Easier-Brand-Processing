@@ -1,4 +1,10 @@
 export default function SearchBar() {
+    const navItems = [
+        { letter: "Explore", label: "Explore", href: "/explore"},
+        { letter: "Brands", label: "Brands", href: "/brand-onboarding/assets"},
+        { letter: "Dashboard", label: "Dashboard", href: "/dashboard"},
+        { letter: "Settings", label: "Settings", href: "/settings"},
+      ];
     return (
       <div
         style={{
@@ -35,8 +41,9 @@ export default function SearchBar() {
         <div
           style={{
             display: "flex", // 👈 needed for row layout
-            justifyContent: "space-between",
-        
+            justifyContent: "flex-start",
+            alignItems: "center",
+            gap: "8px",
             marginTop: "10px",
           }}
         >
@@ -64,9 +71,37 @@ export default function SearchBar() {
               />
             </svg>
           </button>
+
+          {/* middle nav bubbles */}
+          <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+            {navItems.map((item) => (
+              <a
+                href={item.href}
+                key={item.label}
+                aria-label={item.label}
+                style={{
+                  height: "25px",
+                  padding: "0 10px",
+                  borderRadius: "9999px",
+                  background: "rgba(255,255,255,0.12)",
+                  border: "1px solid rgba(255,255,255,0.2)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "white",
+                  fontSize: "0.75rem",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+
+
   
           {/* right controls */}
-          <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+          <div style={{ display: "flex", gap: "12px", alignItems: "center", marginLeft: "auto" }}>
             {/* settings */}
             <button
               aria-label="Settings"

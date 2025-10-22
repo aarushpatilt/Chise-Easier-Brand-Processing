@@ -237,6 +237,14 @@ function FullscreenOverlay({
   }, [url]);
 
   return (
+    <div 
+     style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "flex-start",
+      justifyContent: "flex-start",
+    }}
+    >
     <div
       role="dialog"
       aria-modal="true"
@@ -260,15 +268,25 @@ function FullscreenOverlay({
           width: "100vw",
           height: "100vh",
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
           alignItems: "center",
-          justifyContent: "space-between",
-          
-
+          justifyContent: "flex-start",
+          overflowY: "auto",
         }}
 
        
       >
+        {/* Top row: media + sidebar */}
+        <div
+          style={{
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
 
          {/* left side bar of 4 rem width */}
          <div style={{ width: "0rem", height: "100%" }} />
@@ -539,7 +557,16 @@ function FullscreenOverlay({
             ))}
           </div>
         </aside>
+        </div>
+
+        {/* Bottom: brand sheet */}
+        <div style={{ width: "100%" }}>
+          <BrandSheet />
+        </div>
       </div>
+
+    </div>
+    
 
     </div>
   );

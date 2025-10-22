@@ -1,17 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function SideNav() {
-  // Letters and labels for navigation
+  // Letters, labels, and (for File) link destination
   const navItems = [
     { letter: "G", label: "Globe" },
-    { letter: "F", label: "File" },
+    { letter: "F", label: "File", href: "/brand-onboarding/assets" },
     { letter: "W", label: "Window" },
     { letter: "S", label: "Settings" },
   ];
 
   const [isScrolled, setIsScrolled] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,7 +32,7 @@ export default function SideNav() {
         top: 0,
         height: "100dvh",
         width: "3rem",
-        borderRight: "1px solid var(--theme-color)", // Use theme color for border
+        borderRight: "1px solid var(--theme-color)",
         backgroundColor: isScrolled ? "rgba(255,255,255,0.8)" : "transparent",
         backdropFilter: isScrolled ? "blur(8px)" : "blur(0px)",
         WebkitBackdropFilter: isScrolled ? "blur(8px)" : "blur(0px)",
@@ -50,38 +52,80 @@ export default function SideNav() {
           gap: "1rem",
         }}
       >
-        {navItems.map((item) => (
-          <a
-            key={item.label}
-            href="#"
-            aria-label={item.label}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "opacity 0.2s, color 0.2s",
-              opacity: 0.8,
-              color: "var(--theme-color)",
-              fontFamily: "var(--font-cormorant-garamond)",
-              fontSize: "1.5rem",
-              fontWeight: 600,
-              width: "2rem",
-              height: "2rem",
-              borderRadius: "0.5rem",
-              userSelect: "none",
-              cursor: "pointer",
-              textDecoration: "none",
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.opacity = "1";
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.opacity = "0.8";
-            }}
-          >
-            {item.letter}
-          </a>
-        ))}
+        {navItems.map((item) => {
+          // If File, make it clickable and route
+          if (item.letter === "F" && item.href) {
+            return (
+              <a
+                key={item.label}
+                href={item.href}
+                aria-label={item.label}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "opacity 0.2s, color 0.2s",
+                  opacity: 0.8,
+                  color: "var(--theme-color)",
+                  fontFamily: "var(--font-cormorant-garamond)",
+                  fontSize: "1.5rem",
+                  fontWeight: 600,
+                  width: "2rem",
+                  height: "2rem",
+                  borderRadius: "0.5rem",
+                  userSelect: "none",
+                  cursor: "pointer",
+                  textDecoration: "none",
+                }}
+                onClick={e => {
+                  e.preventDefault();
+                  router.push(item.href!);
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.opacity = "1";
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.opacity = "0.8";
+                }}
+              >
+                {item.letter}
+              </a>
+            );
+          }
+          // Default nav item
+          return (
+            <a
+              key={item.label}
+              href="#"
+              aria-label={item.label}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "opacity 0.2s, color 0.2s",
+                opacity: 0.8,
+                color: "var(--theme-color)",
+                fontFamily: "var(--font-cormorant-garamond)",
+                fontSize: "1.5rem",
+                fontWeight: 600,
+                width: "2rem",
+                height: "2rem",
+                borderRadius: "0.5rem",
+                userSelect: "none",
+                cursor: "pointer",
+                textDecoration: "none",
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.opacity = "1";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.opacity = "0.8";
+              }}
+            >
+              {item.letter}
+            </a>
+          );
+        })}
       </div>
     </nav>
   );

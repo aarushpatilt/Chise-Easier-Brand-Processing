@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <>
       <TopNav />
-      <SideNav />
+      {/* <SideNav /> */}
       
       
 
@@ -22,127 +22,129 @@ export default function Home() {
         style={{
           minHeight: "100vh",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
           position: "relative",
-          textAlign: "center",
+          textAlign: "left",
 
         }}
       >
-        {/* Background image */}
-        <div
-          style={{
-            position: "absolute",
-            top: "4rem",
-            
-            right: 0,
-            width: "100vw",
-            overflowX: "auto",
-            whiteSpace: "nowrap",
-            zIndex: 0,
-            // Hide scroll bar for "overflowX: auto" containers in this section
-            scrollbarWidth: "none", // Firefox
-            msOverflowStyle: "none", // IE and Edge
-            //
-          }}
-        >
-          {/* Three duplicated images, smaller horizontal gap */}
-          <img
-            src="https://cdn.cosmos.so/b8550387-90b8-4287-84e8-072cb7f5501e?format=jpeg"
-            alt="Background visual"
-            style={{
-              display: "inline-block",
-              width: "auto",
-              height: "90vh",
-              objectFit: "cover",
-              marginRight: "1rem",
-              opacity: 1,
-              verticalAlign: "top",
-            }}
-          />
-           <div
-            style={{
-              display: "inline-flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "35vw",
-              minWidth: "320px",
-              height: "90vh",
-              marginRight: "1rem",
-              opacity: 1,
-              verticalAlign: "top",
-              overflow: "hidden",
-              borderTop: "1px solid var(--theme-color)",
-              borderLeft: "1px solid var(--theme-color)",
-              borderRight: "1px solid var(--theme-color)",
-              borderBottom: "none",
-              
-            }}
-          >
-            <span
+        {/* Row: left text column, right images column */}
+        <div style={{ display: "flex", width: "100vw", alignItems: "flex-start", justifyContent: "space-between", gap: "1rem" }}>
+          {/* Left column: heading + subheading */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", paddingLeft: "2rem", paddingTop: "10rem", flex: "0 0 45vw", maxWidth: "45vw" }}>
+            {/* Foreground text */}
+            <div
               style={{
-                fontSize: "3rem",
+                position: "relative",
+                zIndex: 2,
                 fontFamily: "var(--font-cormorant-garamond)",
                 color: "var(--theme-color)",
+                fontSize: "4rem",
+                fontWeight: 400,
                 whiteSpace: "pre-line",
+                lineHeight: 0.75,
+                letterSpacing: "0.001em",
                 textAlign: "left",
-                fontWeight: 500,
-                letterSpacing: "0.012em",
-                lineHeight: 1.1,
-                padding: "1.5rem",
               }}
             >
-              {"CONNECTING\nBRANDS & ENTREPRENEURS\nTOGETHER"}
-            </span>
+              {"CONNECTING \nBRANDS & ENTREPRENEURS \nTOGETHER"}
+            </div>
+
+            {/* subheading explaining the application */}
+            <p
+              style={{
+                fontSize: "1rem",
+                color: "var(--foreground)",
+                textAlign: "left",
+                fontWeight: 600,
+                marginTop: "1rem",
+              }}
+            >
+              Expanding retail for brands. Simplifying store ownership for entrepreneurs.
+            </p>
+
+            {/* Down arrow to scroll to explore section */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", alignSelf: "center", marginTop: "3rem" }}>
+              <span style={{ fontSize: "0.9rem", color: "var(--foreground)", fontWeight: 400, letterSpacing: "0.02em" }}>
+                explore brands
+              </span>
+              <a
+                href="#explore"
+                aria-label="Scroll to explore section"
+                style={{
+                  height: "44px",
+                  width: "44px",
+                  borderRadius: "9999px",
+                  background: "rgba(255,255,255,0.12)",
+                  border: "1px solid rgba(255,255,255,0.2)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "var(--theme-color)",
+                  textDecoration: "none",
+                }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 5v14M12 19l5-5M12 19l-5-5"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </a>
+            </div>
           </div>
- 
-          <img
-            src="https://cdn.cosmos.so/eb47bc04-f291-4606-a84a-ca9dacc35191?format=jpeg"
-            alt="Background visual"
+
+          {/* Right column: images row */}
+          <div
             style={{
-              display: "inline-block",
-              width: "auto",
-              height: "90vh",
-              objectFit: "cover",
-              marginRight: "1rem",
-              opacity: 1,
-              verticalAlign: "top",
+              flex: "1 1 auto",
+              overflowX: "auto",
+              display: "flex",
+              gap: "1rem",
+              paddingTop: "6rem",
+              paddingRight: "1rem",
+              // Hide scroll bar for "overflowX: auto" containers in this section
+              scrollbarWidth: "none", // Firefox
+              msOverflowStyle: "none", // IE and Edge
             }}
-          />
-          <img
-            src="https://cdn.cosmos.so/d3bd5a7a-11bd-48b3-aa26-c1542c108d9f?format=jpeg"
-            alt="Background visual"
-            style={{
-              display: "inline-block",
-              width: "auto",
-              height: "90vh",
-              objectFit: "cover",
-             
-              opacity: 1,
-              verticalAlign: "top",
-            }}
-          />
+          >
+            <img
+              src="https://cdn.cosmos.so/b8550387-90b8-4287-84e8-072cb7f5501e?format=jpeg"
+              alt="Background visual"
+              style={{
+                width: "auto",
+                height: "90vh",
+                objectFit: "cover",
+                opacity: 1,
+              }}
+            />
+            <img
+              src="https://cdn.cosmos.so/eb47bc04-f291-4606-a84a-ca9dacc35191?format=jpeg"
+              alt="Background visual"
+              style={{
+                width: "auto",
+                height: "90vh",
+                objectFit: "cover",
+                opacity: 1,
+              }}
+            />
+            <img
+              src="https://cdn.cosmos.so/d3bd5a7a-11bd-48b3-aa26-c1542c108d9f?format=jpeg"
+              alt="Background visual"
+              style={{
+                width: "auto",
+                height: "90vh",
+                objectFit: "cover",
+                opacity: 1,
+              }}
+            />
+          </div>
         </div>
-
-
-        {/* Foreground text */}
-        {/* <div
-          style={{
-            position: "relative",
-            zIndex: 2,
-            fontFamily: "var(--font-cormorant-garamond)",
-            color: "var(--theme-color)",
-            fontSize: "4rem",
-            fontWeight: 400,
-            whiteSpace: "pre-line",
-            lineHeight: 0.75,
-            letterSpacing: "0.001em",
-          }}
-        >
-          {"CONNECTING \nBRANDS & ENTREPRENEURS \nTOGETHER"}
-        </div> */}
       </section>
 
       {/* add explore text here */}
@@ -150,8 +152,9 @@ export default function Home() {
         style={{
           position: "relative",
           borderTop: "1px solid var(--theme-color)",
-          padding: "3rem 3rem 2rem 4rem",
+          padding: "3rem 3rem 2rem 2rem",
         }}
+        id="explore"
       >
 
         {/* Title */}
@@ -187,7 +190,7 @@ export default function Home() {
       </section>
 
       {/* ViewGrid below landing section */}
-      <section style={{ paddingLeft: "3rem", }}>
+      <section style={{ paddingLeft: "1rem", paddingRight: "1rem" }}>
         <ViewGrid
           interactive={false}
           useScreenshot={true}
