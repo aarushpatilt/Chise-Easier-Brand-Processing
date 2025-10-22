@@ -2,6 +2,7 @@ import SearchBar from "@/components/SearchBar";
 import SideNav from "@/components/SideNav";
 import TopNav from "@/components/TopNav";
 import ViewGrid from "@/components/ViewGrid";
+import ScrollToExplore from "@/components/ScrollToExplore";
 import { Cormorant_Garamond } from "next/font/google";
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -27,13 +28,14 @@ export default function Home() {
           alignItems: "flex-start",
           position: "relative",
           textAlign: "left",
+          paddingTop: "1rem",
 
         }}
       >
         {/* Row: left text column, right images column */}
-        <div style={{ display: "flex", width: "100vw", alignItems: "flex-start", justifyContent: "space-between", gap: "1rem" }}>
+        <div style={{ display: "flex", width: "100vw", height: "150vh", alignItems: "flex-start", justifyContent: "space-between", gap: "1rem" }}>
           {/* Left column: heading + subheading */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", paddingLeft: "2rem", paddingTop: "10rem", flex: "0 0 45vw", maxWidth: "45vw" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", paddingLeft: "2rem", paddingTop: "15rem", flex: "0 0 45vw", maxWidth: "45vw" }}>
             {/* Foreground text */}
             <div
               style={{
@@ -65,38 +67,7 @@ export default function Home() {
               Expanding retail for brands. Simplifying store ownership for entrepreneurs.
             </p>
 
-            {/* Down arrow to scroll to explore section */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", alignSelf: "center", marginTop: "3rem" }}>
-              <span style={{ fontSize: "0.9rem", color: "var(--foreground)", fontWeight: 400, letterSpacing: "0.02em" }}>
-                explore brands
-              </span>
-              <a
-                href="#explore"
-                aria-label="Scroll to explore section"
-                style={{
-                  height: "44px",
-                  width: "44px",
-                  borderRadius: "9999px",
-                  background: "rgba(255,255,255,0.12)",
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "var(--theme-color)",
-                  textDecoration: "none",
-                }}
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M12 5v14M12 19l5-5M12 19l-5-5"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </a>
-            </div>
+            <ScrollToExplore />
           </div>
 
           {/* Right column: images row */}
@@ -118,7 +89,7 @@ export default function Home() {
               alt="Background visual"
               style={{
                 width: "auto",
-                height: "90vh",
+                height: "100vh",
                 objectFit: "cover",
                 opacity: 1,
               }}
@@ -128,7 +99,7 @@ export default function Home() {
               alt="Background visual"
               style={{
                 width: "auto",
-                height: "90vh",
+                height: "100vh",
                 objectFit: "cover",
                 opacity: 1,
               }}
@@ -138,7 +109,7 @@ export default function Home() {
               alt="Background visual"
               style={{
                 width: "auto",
-                height: "90vh",
+                height: "100vh",
                 objectFit: "cover",
                 opacity: 1,
               }}
@@ -151,7 +122,7 @@ export default function Home() {
       <section
         style={{
           position: "relative",
-          borderTop: "1px solid var(--theme-color)",
+          borderTop: "0px solid var(--theme-color)",
           padding: "3rem 3rem 2rem 2rem",
         }}
         id="explore"

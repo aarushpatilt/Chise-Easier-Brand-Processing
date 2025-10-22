@@ -32,9 +32,20 @@ export default function TopNav() {
 
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "space-between",
+        paddingLeft: "2rem",
+        paddingRight: "2rem",
       }}
     >
+      {/* left links */}
+      <div style={{ display: "flex", gap: "1rem", alignItems: "center", flex: 1 }}>
+        <a href="#about" style={{ color: "var(--foreground)", textDecoration: "none", fontSize: "0.95rem" }}>About Us</a>
+        <a href="#docs" style={{ color: "var(--foreground)", textDecoration: "none", fontSize: "0.95rem" }}>Documentation</a>
+        <a href="#pricing" style={{ color: "var(--foreground)", textDecoration: "none", fontSize: "0.95rem" }}>Pricing</a>
+        <a href="#contact" style={{ color: "var(--foreground)", textDecoration: "none", fontSize: "0.95rem" }}>Contact Us</a>
+      </div>
+
+      {/* center title */}
       <span
         style={{
           fontFamily: "var(--font-cormorant-garamond)",
@@ -43,14 +54,19 @@ export default function TopNav() {
           lineHeight: "0.75",
           letterSpacing: "0.02em",
           fontWeight: "600",
-          display: "block", // 👈 make it block-level
-          textAlign: "center", // 👈 center the text
+          display: "block",
+          textAlign: "center",
         }}
       >
         CHISE
         <br />
         MARKETPLACE
       </span>
+
+      {/* right links */}
+      <div style={{ display: "flex", gap: "1rem", alignItems: "center", justifyContent: "flex-end", flex: 1 }}>
+        <a href="#signin" style={{ color: "var(--theme-color)", textDecoration: "none", fontSize: "1rem", fontWeight: 500 }}>Sign in</a>
+      </div>
     </nav>
   );
 }
