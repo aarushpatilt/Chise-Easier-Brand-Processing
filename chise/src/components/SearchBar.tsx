@@ -8,7 +8,7 @@ export default function SearchBar() {
     return (
       <div
         style={{
-          width: "100vh",
+          width: "100%",
           borderRadius: "24px",
           background: "rgba(58, 50, 255, 0.3)",
           boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.20)",

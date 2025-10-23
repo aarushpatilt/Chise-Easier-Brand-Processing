@@ -30,9 +30,12 @@ export default function BrandOnboardingLayout({ children }: { children: React.Re
               fontWeight: 500,
               fontSize: "1.25rem",
               marginBottom: "1rem",
+              color: "var(--theme-color)",
+              
+              
             }}
           >
-            Brand Setup
+            Onboarding
           </h2>
   
           <nav

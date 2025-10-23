@@ -39,10 +39,10 @@ export default function TopNav() {
     >
       {/* left links */}
       <div style={{ display: "flex", gap: "1rem", alignItems: "center", flex: 1 }}>
-        <a href="#about" style={{ color: "var(--foreground)", textDecoration: "none", fontSize: "0.95rem" }}>About Us</a>
-        <a href="#docs" style={{ color: "var(--foreground)", textDecoration: "none", fontSize: "0.95rem" }}>Documentation</a>
-        <a href="#pricing" style={{ color: "var(--foreground)", textDecoration: "none", fontSize: "0.95rem" }}>Pricing</a>
-        <a href="#contact" style={{ color: "var(--foreground)", textDecoration: "none", fontSize: "0.95rem" }}>Contact Us</a>
+        <a href="#about" style={{ color: "var(--foreground)", textDecoration: "none", fontSize: "1rem", fontWeight: 500, }}>About Us</a>
+        <a href="#docs" style={{ color: "var(--foreground)", textDecoration: "none", fontSize: "1rem", fontWeight: 500 }}>Documentation</a>
+        <a href="#pricing" style={{ color: "var(--foreground)", textDecoration: "none", fontSize: "1rem", fontWeight: 500 }}>Pricing</a>
+        <a href="#contact" style={{ color: "var(--foreground)", textDecoration: "none", fontSize: "1rem", fontWeight: 500 }}>Contact Us</a>
       </div>
 
       {/* center title */}

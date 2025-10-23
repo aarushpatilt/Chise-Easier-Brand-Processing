@@ -50,7 +50,7 @@ export default function BrandAssets() {
       style={{
         backgroundColor: "var(--background)",
         minHeight: "100vh",
-        padding: "4rem 8vw",
+        padding: "0rem 8vw",
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",

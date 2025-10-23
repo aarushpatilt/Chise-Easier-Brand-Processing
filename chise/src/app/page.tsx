@@ -33,7 +33,7 @@ export default function Home() {
         }}
       >
         {/* Row: left text column, right images column */}
-        <div style={{ display: "flex", width: "100vw", height: "150vh", alignItems: "flex-start", justifyContent: "space-between", gap: "1rem" }}>
+        <div style={{ display: "flex", width: "100vw", height: "145vh", alignItems: "flex-start", justifyContent: "space-between", gap: "1rem" }}>
           {/* Left column: heading + subheading */}
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem", paddingLeft: "2rem", paddingTop: "15rem", flex: "0 0 45vw", maxWidth: "45vw" }}>
             {/* Foreground text */}
@@ -43,7 +43,7 @@ export default function Home() {
                 zIndex: 2,
                 fontFamily: "var(--font-cormorant-garamond)",
                 color: "var(--theme-color)",
-                fontSize: "4rem",
+                fontSize: "3.5rem",
                 fontWeight: 400,
                 whiteSpace: "pre-line",
                 lineHeight: 0.75,
@@ -60,11 +60,12 @@ export default function Home() {
                 fontSize: "1rem",
                 color: "var(--foreground)",
                 textAlign: "left",
-                fontWeight: 600,
+                fontWeight: 500,
+
                 marginTop: "1rem",
               }}
             >
-              Expanding retail for brands. Simplifying store ownership for entrepreneurs.
+              Expanding retail for brands & <br /> Simplifying store ownership for entrepreneurs.
             </p>
 
             <ScrollToExplore />
@@ -123,7 +124,7 @@ export default function Home() {
         style={{
           position: "relative",
           borderTop: "0px solid var(--theme-color)",
-          padding: "3rem 3rem 2rem 2rem",
+          padding: "0rem 3rem 2rem 2rem",
         }}
         id="explore"
       >
@@ -137,7 +138,7 @@ export default function Home() {
             fontSize: "4rem",
             letterSpacing: "0.01em",
             lineHeight: 0.9,
-
+   
           }}
         >
           EXPLORE BRANDS
@@ -185,7 +186,11 @@ export default function Home() {
         style={{
           position: "fixed",
           bottom: "1rem",
-          width: "100vw",
+          width: "50vw",
+          left: "52vw",
+
+        
+          transform: "translateX(-50%)",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
