@@ -44,9 +44,8 @@ export default function Home() {
       <TopNav />
       {/* <SideNav /> */}
       
-      
-
-      {/* Landing section (normal flow, not fixed) */}
+      {/*
+      // Landing section (normal flow, not fixed)
       <section
         style={{
           minHeight: "100vh",
@@ -60,11 +59,11 @@ export default function Home() {
 
         }}
       >
-        {/* Row: left text column, right images column */}
+        // Row: left text column, right images column
         <div style={{ display: "flex", width: "100vw", height: "130vh", alignItems: "flex-start", justifyContent: "space-between", gap: "5rem" }}>
-          {/* Left column: heading + subheading */}
+          // Left column: heading + subheading
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem", paddingLeft: "2rem", paddingTop: "15rem", flex: "0 0 45vw", maxWidth: "45vw" }}>
-            {/* Foreground text */}
+            // Foreground text
             <div
               style={{
                 position: "relative",
@@ -82,7 +81,7 @@ export default function Home() {
               {"CONNECTING \nBRANDS & ENTREPRENEURS \nTOGETHER"}
             </div>
 
-            {/* subheading explaining the application */}
+            // subheading explaining the application
             <p
               style={{
                 fontSize: "1rem",
@@ -99,7 +98,7 @@ export default function Home() {
             <ScrollToExplore />
           </div>
 
-          {/* Right column: images row */}
+          // Right column: images row
           <div
             style={{
               flex: "1 1 auto",
@@ -150,6 +149,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      */}
 
       {/* add explore text here */}
       <section
@@ -157,6 +157,7 @@ export default function Home() {
           position: "relative",
           borderTop: "0px solid var(--theme-color)",
           padding: "0rem 3rem 2rem 2rem",
+          marginTop: "5rem",
         }}
         id="explore"
       >
