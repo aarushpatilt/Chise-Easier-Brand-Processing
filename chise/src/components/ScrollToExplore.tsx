@@ -38,30 +38,32 @@ export default function ScrollToExplore({ targetId = "explore", label = "explore
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", alignSelf: "center", marginTop: "3rem" }}>
-      <span style={{ fontSize: "0.9rem", color: "var(--foreground)", fontWeight: 400, letterSpacing: "0.02em" }}>
-        {label}
-      </span>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "0.5rem", alignSelf: "flex-start", marginTop: "3rem" }}>
       <a
         href={`#${targetId}`}
         aria-label="Scroll to explore section"
         onClick={handleClick}
         style={{
           height: "44px",
-          width: "44px",
+          padding: "0 18px",
           borderRadius: "9999px",
-          background: "rgba(255,255,255,0.12)",
-          border: "1px solid rgba(255,255,255,0.2)",
+          background: "linear-gradient(90deg, #0a2070 0%, #0e2aa2 45%, #0b38dc 100%)",
+          border: "1px solid rgba(255,255,255,0.35)",
+          boxShadow: "0 4px 16px rgba(10,32,112,0.22)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          color: "var(--theme-color)",
+          gap: "8px",
+          color: "#ffffff",
           textDecoration: "none",
+          fontWeight: 500,
+          fontSize: "0.95rem",
         }}
       >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <span>Explore Brands</span>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
           <path
-            d="M12 5v14M12 19l5-5M12 19l-5-5"
+            d="M7 17L17 7M17 7H9M17 7V15"
             stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"

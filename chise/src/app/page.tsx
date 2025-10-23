@@ -33,7 +33,7 @@ export default function Home() {
         }}
       >
         {/* Row: left text column, right images column */}
-        <div style={{ display: "flex", width: "100vw", height: "145vh", alignItems: "flex-start", justifyContent: "space-between", gap: "1rem" }}>
+        <div style={{ display: "flex", width: "100vw", height: "145vh", alignItems: "flex-start", justifyContent: "space-between", gap: "5rem" }}>
           {/* Left column: heading + subheading */}
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem", paddingLeft: "2rem", paddingTop: "15rem", flex: "0 0 45vw", maxWidth: "45vw" }}>
             {/* Foreground text */}
@@ -43,8 +43,8 @@ export default function Home() {
                 zIndex: 2,
                 fontFamily: "var(--font-cormorant-garamond)",
                 color: "var(--theme-color)",
-                fontSize: "3.5rem",
-                fontWeight: 400,
+                fontSize: "4rem",
+                fontWeight: 500,
                 whiteSpace: "pre-line",
                 lineHeight: 0.75,
                 letterSpacing: "0.001em",
@@ -80,6 +80,7 @@ export default function Home() {
               gap: "1rem",
               paddingTop: "6rem",
               paddingRight: "1rem",
+              borderRadius: "15px",
               // Hide scroll bar for "overflowX: auto" containers in this section
               scrollbarWidth: "none", // Firefox
               msOverflowStyle: "none", // IE and Edge
@@ -93,6 +94,7 @@ export default function Home() {
                 height: "100vh",
                 objectFit: "cover",
                 opacity: 1,
+                borderRadius: "15px",
               }}
             />
             <img
@@ -103,6 +105,7 @@ export default function Home() {
                 height: "100vh",
                 objectFit: "cover",
                 opacity: 1,
+                borderRadius: "15px",
               }}
             />
             <img
@@ -113,6 +116,7 @@ export default function Home() {
                 height: "100vh",
                 objectFit: "cover",
                 opacity: 1,
+                borderRadius: "15px",
               }}
             />
           </div>
@@ -187,7 +191,7 @@ export default function Home() {
           position: "fixed",
           bottom: "1rem",
           width: "50vw",
-          left: "52vw",
+          left: "51vw",
 
         
           transform: "translateX(-50%)",
