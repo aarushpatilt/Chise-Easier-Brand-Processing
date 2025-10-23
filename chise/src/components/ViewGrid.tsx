@@ -246,6 +246,36 @@ function FullscreenOverlay({
     }
   }, [url]);
 
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const portfolioRef = useRef<HTMLDivElement | null>(null);
+
+  const handlePortfolioScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const container = scrollRef.current;
+    const target = portfolioRef.current;
+    if (!container || !target) return;
+
+    const startY = container.scrollTop;
+    const targetY =
+      target.getBoundingClientRect().top - container.getBoundingClientRect().top + container.scrollTop - 16; // small offset
+    const distance = targetY - startY;
+    const durationMs = 900;
+
+    let startTime: number | null = null;
+    const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+    const step = (timestamp: number) => {
+      if (startTime === null) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / durationMs, 1);
+      const eased = easeInOutCubic(progress);
+      container.scrollTo({ top: startY + distance * eased });
+      if (progress < 1) requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
+  };
+
   return createPortal(
     <div
       role="dialog"
@@ -275,6 +305,7 @@ function FullscreenOverlay({
           justifyContent: "flex-start",
           overflowY: "auto",
         }}
+        ref={scrollRef}
       >
         {/* Top row: media + sidebar */}
         <div
@@ -289,30 +320,74 @@ function FullscreenOverlay({
         >
           {/* left side bar spacer */}
           <div style={{ width: "0rem", height: "100%" }} />
-          {/* LEFT: Image */}
+          {/* LEFT: Media + CTA column */}
           <div
             style={{
-              aspectRatio: "16 / 10",
-              height: "75%",
-              width: "auto",
-              borderRadius: "20px",
-              overflow: "hidden",
-              background: "#fff",
-              boxShadow: "0 8px 40px rgba(0,0,0,0.12)",
               display: "flex",
-              marginLeft: "0rem",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "0.75rem",
             }}
           >
-            <img
-              src={screenshotUrl}
-              alt={url}
+            {/* Media box */}
+            <div
               style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                display: "block",
+                aspectRatio: "16 / 10",
+                height: "75%",
+                width: "auto",
+                borderRadius: "20px",
+                overflow: "hidden",
+                background: "#fff",
+                boxShadow: "0 8px 40px rgba(0,0,0,0.12)",
+                display: "flex",
+                marginLeft: "0rem",
+                position: "relative",
               }}
-            />
+            >
+              <img
+                src={screenshotUrl}
+                alt={url}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  display: "block",
+                }}
+              />
+            </div>
+
+            {/* CTA button below image */}
+            <a
+              href="#portfolio"
+              onClick={handlePortfolioScroll}
+              style={{
+                height: "44px",
+                padding: "0 18px",
+                borderRadius: "9999px",
+                background: "linear-gradient(90deg, #0a2070 0%, #0e2aa2 45%, #0b38dc 100%)",
+                border: "1px solid rgba(255,255,255,0.35)",
+                boxShadow: "0 4px 16px rgba(10,32,112,0.22)",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
+                color: "#ffffff",
+                textDecoration: "none",
+                fontWeight: 500,
+                fontSize: "0.95rem",
+              }}
+            >
+              <span>Brand Identity Portfolio</span>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M7 17L17 7M17 7H9M17 7V15"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </a>
           </div>
 
           {/* RIGHT: Sidebar */}
@@ -555,7 +630,7 @@ function FullscreenOverlay({
         </div>
 
         {/* Bottom: brand sheet */}
-        <div style={{ width: "100%" }}>
+        <div id="portfolio" ref={portfolioRef} style={{ width: "100%", scrollMarginTop: 16 }}>
           <BrandSheet brandId={1} />
         </div>
       </div>
