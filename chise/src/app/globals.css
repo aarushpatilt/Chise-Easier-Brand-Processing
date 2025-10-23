@@ -37,3 +37,22 @@ html {
   from { transform: translateY(8px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+
+.reveal
+{
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 500ms ease, transform 600ms ease;
+}
+
+.reveal--in
+{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal--out
+{
+  opacity: 0;
+  transform: translateY(24px);
+}

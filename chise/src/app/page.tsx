@@ -1,9 +1,11 @@
+"use client";
 import SearchBar from "@/components/SearchBar";
 import SideNav from "@/components/SideNav";
 import TopNav from "@/components/TopNav";
 import ViewGrid from "@/components/ViewGrid";
 import ScrollToExplore from "@/components/ScrollToExplore";
 import { Cormorant_Garamond } from "next/font/google";
+import { useEffect, useRef } from "react";
 
 const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
@@ -11,6 +13,32 @@ const cormorantGaramond = Cormorant_Garamond({
 });
 
 export default function Home() {
+  const exploreRef = useRef<HTMLHeadingElement | null>(null);
+  const gridRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const targets = [exploreRef.current, gridRef.current].filter(Boolean) as Element[];
+    if (targets.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const el = entry.target as HTMLElement;
+          if (entry.isIntersecting) {
+            el.classList.add("reveal--in");
+            el.classList.remove("reveal--out");
+          } else {
+            el.classList.add("reveal--out");
+            el.classList.remove("reveal--in");
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    targets.forEach((t) => observer.observe(t));
+    return () => observer.disconnect();
+  }, []);
   return (
     <>
       <TopNav />
@@ -33,7 +61,7 @@ export default function Home() {
         }}
       >
         {/* Row: left text column, right images column */}
-        <div style={{ display: "flex", width: "100vw", height: "145vh", alignItems: "flex-start", justifyContent: "space-between", gap: "5rem" }}>
+        <div style={{ display: "flex", width: "100vw", height: "130vh", alignItems: "flex-start", justifyContent: "space-between", gap: "5rem" }}>
           {/* Left column: heading + subheading */}
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem", paddingLeft: "2rem", paddingTop: "15rem", flex: "0 0 45vw", maxWidth: "45vw" }}>
             {/* Foreground text */}
@@ -135,6 +163,8 @@ export default function Home() {
 
         {/* Title */}
         <h1
+          ref={exploreRef}
+          className="reveal reveal--out"
           style={{
             fontFamily: "var(--font-cormorant-garamond)",
             color: "var(--theme-color)",
@@ -166,7 +196,7 @@ export default function Home() {
       </section>
 
       {/* ViewGrid below landing section */}
-      <section style={{ paddingLeft: "1rem", paddingRight: "1rem" }}>
+      <section ref={gridRef} className="reveal reveal--out" style={{ paddingLeft: "1rem", paddingRight: "1rem" }}>
         <ViewGrid
           interactive={false}
           useScreenshot={true}
