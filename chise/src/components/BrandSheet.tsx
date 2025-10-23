@@ -2,118 +2,61 @@
 
 import React from "react";
 
-export default function BrandSheet() {
+export default function BrandSheet({ brandId }: { brandId: number }) {
+    const listOfImageLinks: { [key: number]: string[] } = {
+        1: [
+            "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/3a82d5224690693.680fc514c8446.jpg",
+            "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/6c3405224690693.680fc514c6645.png",
+            "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/1d5206224690693.680fc514c7447.jpg"
+        ],
+        2: [
+            "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/3a82d5224690693.680fc514c8446.jpg",
+            "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/6c3405224690693.680fc514c6645.png",
+            "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/1d5206224690693.680fc514c7447.jpg"
+        ]
+    };
+
+    const images = listOfImageLinks[brandId] || [];
+
     return (
         <div
             style={{
-                backgroundColor: "#fafafa",
+                backgroundColor: "var(--background)",
                 color: "#111",
                 minHeight: "100vh",
-                padding: "2rem",
-
+                marginLeft: "1rem",
+                marginRight: "1rem",
+                borderRadius: "20px",
+                border: "0px solid var(--theme-color)",
+                padding: "0",
                 display: "flex",
                 flexDirection: "column",
-
+                alignItems: "stretch",
+                gap: "0",
+                overflow: "hidden" // Ensure child images don't overflow the rounded corners
             }}
         >
-            {/* Top Section */}
-            <div style={{ display: "flex" }}>
-                <div>
-                    <h1 style={{ fontSize: "6rem", fontWeight: 500, fontFamily: "var(--font-cormorant-garamond)", color: "var(--theme-color)", margin: "0rem", padding: "0rem", lineHeight: "1" }}>
-                        BRAND
-                    </h1>
-                    <p style={{ fontSize: "1rem", margin: "0rem", padding: "0rem", fontWeight: 500 }}>
-                        All information about the brand
-                    </p>
-                </div>
-
-                {/* Small Circle */}
-            </div>
-            <div
-                style={{
-                    width: "100%",
-                    height: "1px",
-                    backgroundColor: "var(--theme-color)",
-                    margin: "2rem 0"
-                }}
-            />
-
-
-
-            {/* Color Circles */}
-            <div style={{ display: "flex", flexDirection: "row", gap: "1rem", alignItems: "flex-start", width: "100%" }}>
-                <p style={{ fontSize: "2rem", margin: "0rem", padding: "0rem", fontWeight: 500, flexShrink: 0, fontFamily: "var(--font-cormorant-garamond)" }}>
-                    COLOR PALETTE
-                </p>
-                
-
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "top",
-                        gap: "4rem",
-                        marginTop: "0rem",
-                        justifyContent: "flex-end",
-                        width: "100%",
-                        alignSelf: "flex-end",
-                    }}
-                >
-                    <div
+            {images.length > 0 ? (
+                images.map((imgUrl, idx) => (
+                    <img
+                        key={idx}
+                        src={imgUrl}
+                        alt={`Brand ${brandId} image ${idx + 1}`}
                         style={{
-                            width: "200px",
-                            height: "200px",
-                            borderRadius: "50%",
-                            backgroundColor: "#B77474",
+                            width: "100%",
+                            height: "100vh",
+                            objectFit: "cover",
+                            borderRadius: 0,
+                            boxShadow: "none",
+                            background: "#fff",
+                            margin: 0,
+                            display: "block"
                         }}
                     />
-                    <div
-                        style={{
-                            width: "200px",
-                            height: "200px",
-                            borderRadius: "50%",
-                            backgroundColor: "#B52C1E",
-                        }}
-                    />
-                    <div
-                        style={{
-                            width: "200px",
-                            height: "200px",
-                            borderRadius: "50%",
-                            backgroundColor: "#222",
-                        }}
-                    />
-                </div>
-            </div>
-
-            <div
-                style={{
-                    width: "100%",
-                    height: "1px",
-                    backgroundColor: "var(--theme-color)",
-                    margin: "2rem 0"
-                }}
-            />
-
-            <div style={{ display: "flex", flexDirection: "row", gap: "1rem", alignItems: "flex-start", width: "100%" }}>
-                <p style={{ fontSize: "2rem", margin: "0rem", padding: "0rem", fontWeight: 500, flexShrink: 0, fontFamily: "var(--font-cormorant-garamond)" }}>
-                    TYPOGRAPHY
-                </p>
-                
-
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "top",
-                        gap: "4rem",
-                        marginTop: "0rem",
-                        justifyContent: "flex-end",
-                        width: "100%",
-                        alignSelf: "flex-end",
-                    }}
-                >
-                    
-                </div>
-            </div>
+                ))
+            ) : (
+                <span style={{ color: "#aaa", fontStyle: "italic" }}>No images found for this brand.</span>
+            )}
         </div>
     );
 }

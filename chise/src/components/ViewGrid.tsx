@@ -100,7 +100,7 @@ function GridCell({
         position: "relative",
         width: "100%",
         aspectRatio: "16 / 10",
-        borderRadius: "15px",
+        borderRadius: "20px",
         overflow: "hidden",
         background: "transparent",
         boxShadow: "0 4px 16px rgba(0,0,0,0.05)",
@@ -295,7 +295,7 @@ function FullscreenOverlay({
               aspectRatio: "16 / 10",
               height: "75%",
               width: "auto",
-              borderRadius: "0px",
+              borderRadius: "20px",
               overflow: "hidden",
               background: "#fff",
               boxShadow: "0 8px 40px rgba(0,0,0,0.12)",
@@ -451,7 +451,7 @@ function FullscreenOverlay({
                 style={{
                   background: "rgba(var(--foreground-rgb, 0,0,0), 0.05)",
                   color: "var(--foreground)",
-                  borderRadius: "15px",
+                  borderRadius: "20px",
                   padding: "0.24rem 0.7rem",
                   fontWeight: 500,
                   fontSize: "0.7rem",
@@ -466,7 +466,7 @@ function FullscreenOverlay({
                 style={{
                   background: "rgba(var(--foreground-rgb, 0,0,0), 0.05)",
                   color: "var(--foreground)",
-                  borderRadius: "15px",
+                  borderRadius: "20px",
                   padding: "0.24rem 0.7rem",
                   fontWeight: 500,
                   fontSize: "0.7rem",
@@ -481,7 +481,7 @@ function FullscreenOverlay({
                 style={{
                   background: "rgba(var(--foreground-rgb, 0,0,0), 0.05)",
                   color: "var(--foreground)",
-                  borderRadius: "15px",
+                  borderRadius: "20px",
                   padding: "0.24rem 0.7rem",
                   fontWeight: 500,
                   fontSize: "0.7rem",
@@ -556,7 +556,7 @@ function FullscreenOverlay({
 
         {/* Bottom: brand sheet */}
         <div style={{ width: "100%" }}>
-          <BrandSheet />
+          <BrandSheet brandId={1} />
         </div>
       </div>
     </div>,

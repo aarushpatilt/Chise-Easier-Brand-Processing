@@ -108,7 +108,7 @@ export default function Home() {
               gap: "1rem",
               paddingTop: "6rem",
               paddingRight: "1rem",
-              borderRadius: "15px",
+              borderRadius: "20px",
               // Hide scroll bar for "overflowX: auto" containers in this section
               scrollbarWidth: "none", // Firefox
               msOverflowStyle: "none", // IE and Edge
@@ -122,7 +122,7 @@ export default function Home() {
                 height: "100vh",
                 objectFit: "cover",
                 opacity: 1,
-                borderRadius: "15px",
+                borderRadius: "20px",
               }}
             />
             <img
@@ -133,7 +133,7 @@ export default function Home() {
                 height: "100vh",
                 objectFit: "cover",
                 opacity: 1,
-                borderRadius: "15px",
+                borderRadius: "20px",
               }}
             />
             <img
@@ -144,7 +144,7 @@ export default function Home() {
                 height: "100vh",
                 objectFit: "cover",
                 opacity: 1,
-                borderRadius: "15px",
+                borderRadius: "20px",
               }}
             />
           </div>
