@@ -15,24 +15,64 @@ type ViewGridProps = {
 
 export default function ViewGrid({
   urls,
-  cols = 3,
+  cols = 4,
   rows = 4,
-  gapPx = 16,
+  gapPx = 15,
   interactive = false,
   useScreenshot = false, // ✅ default off
 }: ViewGridProps) {
   const capacity = cols * rows;
   const items = useMemo(() => urls.slice(0, capacity), [urls, capacity]);
   const [activeUrl, setActiveUrl] = useState<string | null>(null);
+  const categories = [
+    "Clothing",
+    "Drinks",
+    "Makeup",
+    "Fashion",
+    "Electronics",
+    "Home",
+    "Accessories",
+    "Beauty",
+  ];
 
   return (
     <div
       style={{
         width: "100%",
-        margin: "0 auto",
-        padding: "1rem",
+        paddingLeft: "1rem",
+        paddingRight: "1rem",
       }}
     >
+      {/* Categories row */}
+      <div
+        style={{
+          display: "flex",
+          gap: "0.5rem",
+          flexWrap: "wrap",
+          alignItems: "center",
+          marginBottom: "3rem",
+        }}
+      >
+        {categories.map((label) => (
+          <button
+            key={label}
+            aria-label={label}
+            style={{
+              height: "36px",
+              padding: "0 14px",
+              borderRadius: "9999px",
+              background: "rgba(0,0,0,0.06)",
+              border: "0px solid rgba(0,0,0,0.06)",
+              color: "#111",
+              fontSize: "0.85rem",
+              fontWeight: 500,
+              cursor: "pointer",
+            }}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
       <div
         style={{
           display: "grid",
@@ -284,7 +324,7 @@ function FullscreenOverlay({
       style={{
         position: "fixed",
         inset: 0,
-        background: "rgba(255, 255, 255, 0.35)",
+        background: "rgba(255, 255, 255, 0.55)",
         backdropFilter: "blur(50px)",
         WebkitBackdropFilter: "blur(50px)",
         zIndex: 10000,
@@ -340,8 +380,11 @@ function FullscreenOverlay({
                 background: "#fff",
                 boxShadow: "0 8px 40px rgba(0,0,0,0.12)",
                 display: "flex",
-                marginLeft: "0rem",
+                marginLeft: "2rem",
+                marginRight: "2rem",
+                marginTop: "1rem",
                 position: "relative",
+
               }}
             >
               <img
@@ -364,7 +407,7 @@ function FullscreenOverlay({
                 height: "44px",
                 padding: "0 18px",
                 borderRadius: "9999px",
-                background: "linear-gradient(90deg, #0a2070 0%, #0e2aa2 45%, #0b38dc 100%)",
+                background: "var(--theme-color)",
                 border: "1px solid rgba(255,255,255,0.35)",
                 boxShadow: "0 4px 16px rgba(10,32,112,0.22)",
                 display: "inline-flex",
@@ -375,6 +418,8 @@ function FullscreenOverlay({
                 textDecoration: "none",
                 fontWeight: 500,
                 fontSize: "0.95rem",
+                alignSelf: "center",
+                marginTop: "1rem"
               }}
             >
               <span>Brand Identity Portfolio</span>
@@ -393,7 +438,7 @@ function FullscreenOverlay({
           {/* RIGHT: Sidebar */}
           <aside
             style={{
-              width: "30%",
+              width: "40%",
               height: "95%",
               background: "#fff",
               borderRadius: "20px",

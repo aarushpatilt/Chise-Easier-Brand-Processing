@@ -51,7 +51,7 @@ export default function TopNav() {
       <span
         style={{
           fontFamily: "var(--font-cormorant-garamond)",
-          color: "var(--foreground)",
+          color: "var(--theme-color)",
           fontSize: "1.5rem",
           lineHeight: "0.75",
           letterSpacing: "0.02em",

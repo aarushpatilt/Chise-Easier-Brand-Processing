@@ -167,20 +167,21 @@ export default function Home() {
           ref={exploreRef}
           className="reveal reveal--out"
           style={{
-            fontFamily: "var(--font-cormorant-garamond)",
-            color: "var(--theme-color)",
-            fontWeight: 400,
-            fontSize: "4rem",
+            // fontFamily: "var(--font-cormorant-garamond)",
+            color: "var(--foreground)",
+            fontWeight: 500,
+            fontSize: "2rem",
             letterSpacing: "0.01em",
             lineHeight: 0.9,
+            marginTop: "1rem",
    
           }}
         >
-          EXPLORE BRANDS
+          BRANDS
         </h1>
 
         {/* Subtitle */}
-        <p
+        {/* <p
           style={{
 
             fontSize: "1rem",
@@ -189,7 +190,7 @@ export default function Home() {
           }}
         >
           The latest collection of brands.
-        </p>
+        </p> */}
 
 
 
