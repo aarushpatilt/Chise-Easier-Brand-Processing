@@ -34,6 +34,7 @@ export default function ViewGrid({
     "Accessories",
     "Beauty",
   ];
+  const [selectedCategory, setSelectedCategory] = useState<string>(categories[0]);
 
   return (
     <div
@@ -47,31 +48,37 @@ export default function ViewGrid({
       <div
         style={{
           display: "flex",
-          gap: "0.5rem",
+          gap: "3.5rem",
           flexWrap: "wrap",
           alignItems: "center",
-          marginBottom: "3rem",
+          marginBottom: "2rem",
         }}
       >
-        {categories.map((label) => (
-          <button
-            key={label}
-            aria-label={label}
-            style={{
-              height: "36px",
-              padding: "0 14px",
-              borderRadius: "9999px",
-              background: "rgba(0,0,0,0.06)",
-              border: "0px solid rgba(0,0,0,0.06)",
-              color: "#111",
-              fontSize: "0.85rem",
-              fontWeight: 500,
-              cursor: "pointer",
-            }}
-          >
-            {label}
-          </button>
-        ))}
+        {categories.map((label) => {
+          const isSelected = selectedCategory === label;
+          return (
+            <button
+              key={label}
+              aria-label={label}
+              aria-pressed={isSelected}
+              onClick={() => setSelectedCategory(label)}
+              style={{
+                height: isSelected ? "36px" : "auto",
+                padding: isSelected ? "0 14px" : "0",
+                borderRadius: isSelected ? "20px" : "0",
+                background: isSelected ? "rgba(0,0,0,0.06)" : "transparent",
+                border: 0,
+                color: "#111",
+                opacity: isSelected ? 1 : 0.5,
+                fontSize: "0.9rem",
+                fontWeight: 500,
+                cursor: "pointer",
+              }}
+            >
+              {label}
+            </button>
+          );
+        })}
       </div>
       <div
         style={{
@@ -143,7 +150,7 @@ function GridCell({
         borderRadius: "20px",
         overflow: "hidden",
         background: "transparent",
-        boxShadow: "0 4px 16px rgba(0,0,0,0.05)",
+        // boxShadow: "0 4px 16px rgba(0,0,0,0.05)",
         border: "0.5px solid rgba(255,255,255,0.06)",
         cursor: "pointer",
       }}
@@ -199,8 +206,9 @@ function GridCell({
           left: 8,
           bottom: 8,
           padding: "4px 8px",
-          borderRadius: 8,
+          borderRadius: "20px",
           background: "rgba(0,0,0,0.55)",
+          backdropFilter: "blur(10px)",
           color: "#fff",
           fontSize: "0.75rem",
           maxWidth: "90%",
@@ -210,7 +218,17 @@ function GridCell({
         }}
         title={url}
       >
-        {prettyUrl(url)}
+        {(() => {
+          try {
+            const u = new URL(url);
+            let hostname = u.hostname.replace(/^www\./, "");
+            // Remove anything after the first '.' (including the dot itself)
+            const base = hostname.split(".")[0];
+            return base;
+          } catch {
+            return url;
+          }
+        })()}
       </div>
     </div>
   );
@@ -256,6 +274,7 @@ function FullscreenOverlay({
   url: string;
   onClose: () => void;
 }) {
+  const [isClosing, setIsClosing] = useState(false);
   const screenshotUrl = useMemo(() => {
     const encoded = encodeURIComponent(url);
     return `https://s0.wp.com/mshots/v1/${encoded}?w=1600`;
@@ -263,7 +282,7 @@ function FullscreenOverlay({
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") handleClose();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -285,6 +304,14 @@ function FullscreenOverlay({
       return url;
     }
   }, [url]);
+
+  const handleClose = () => {
+    if (isClosing) return;
+    setIsClosing(true);
+    window.setTimeout(() => {
+      onClose();
+    }, 300);
+  };
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const portfolioRef = useRef<HTMLDivElement | null>(null);
@@ -320,7 +347,7 @@ function FullscreenOverlay({
     <div
       role="dialog"
       aria-modal="true"
-      onClick={onClose}
+      onClick={handleClose}
       style={{
         position: "fixed",
         inset: 0,
@@ -331,7 +358,10 @@ function FullscreenOverlay({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        transition: "background 0.3s ease",
+        transition: "opacity 260ms ease, background 0.3s ease",
+        animation: isClosing ? "none" : "overlayFadeIn 260ms ease-out both",
+        opacity: isClosing ? 0 : 1,
+        willChange: "opacity",
       }}
     >
       <div
@@ -344,6 +374,11 @@ function FullscreenOverlay({
           alignItems: "center",
           justifyContent: "flex-start",
           overflowY: "auto",
+          animation: isClosing ? "none" : "panelSlideIn 320ms ease-out both",
+          transition: "opacity 260ms ease, transform 260ms ease",
+          opacity: isClosing ? 0 : 1,
+          transform: isClosing ? "translateY(8px)" : "translateY(0)",
+          willChange: "transform, opacity",
         }}
         ref={scrollRef}
       >
@@ -514,7 +549,7 @@ function FullscreenOverlay({
                 {/* X button to close the fullscreen overlay */}
                 <button
                   aria-label="Close"
-                  onClick={onClose}
+                  onClick={handleClose}
                   style={{
                     height: "35px",
                     width: "35px",

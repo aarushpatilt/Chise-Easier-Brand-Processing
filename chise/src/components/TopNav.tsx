@@ -23,7 +23,7 @@ export default function TopNav() {
         left: 0,
         width: "100%",
         height: "5rem",
-        backgroundColor: isScrolled ? "rgba(255,255,255,0.8)" : "transparent",
+        backgroundColor: isScrolled ? "rgba(255,255,255,1)" : "transparent",
         backdropFilter: isScrolled ? "blur(16px)" : "blur(0px)",
         WebkitBackdropFilter: isScrolled ? "blur(16px)" : "blur(0px)",
         boxShadow: "none",
@@ -40,7 +40,7 @@ export default function TopNav() {
     >
       {/* left: hamburger */}
       <div style={{ display: "flex", gap: "1rem", alignItems: "center", flex: 1 }}>
-        <button aria-label="Open menu" style={{ background: "transparent", border: "none", cursor: "pointer", padding: 4, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <button aria-label="Open menu" style={{ background: "transparent", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" style={{ color: "var(--foreground)" }}>
             <path d="M4 6h16M4 12h16M4 18h16" strokeWidth="2" strokeLinecap="round" />
           </svg>

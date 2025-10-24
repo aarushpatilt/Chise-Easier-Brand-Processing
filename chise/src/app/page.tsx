@@ -211,7 +211,7 @@ export default function Home() {
             "https://www.adaline.ai/",
             "https://johannadarrieta.com/",
 
-            "https://hyperbolic.studiofreight.com/",
+            "https://uncoverlab.co",
             "https://getmocha.com/",
             "https://www.nardove.com/",
           ]} />
