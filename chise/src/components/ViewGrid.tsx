@@ -565,7 +565,8 @@ function FullscreenOverlay({
                 fontWeight: 500,
                 fontSize: "0.95rem",
                 alignSelf: "center",
-                marginTop: "1rem"
+                marginTop: "1rem",
+                marginBottom: "2rem"
               }}
             >
               <span>Brand Identity Portfolio</span>
