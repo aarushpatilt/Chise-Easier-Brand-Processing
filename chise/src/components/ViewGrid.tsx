@@ -275,6 +275,7 @@ function FullscreenOverlay({
   onClose: () => void;
 }) {
   const [isClosing, setIsClosing] = useState(false);
+  const [useWhiteIcons, setUseWhiteIcons] = useState(false);
   const screenshotUrl = useMemo(() => {
     const encoded = encodeURIComponent(url);
     return `https://s0.wp.com/mshots/v1/${encoded}?w=1600`;
@@ -315,6 +316,72 @@ function FullscreenOverlay({
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const portfolioRef = useRef<HTMLDivElement | null>(null);
+  const controlsRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const pickBgColor = (): string | null => {
+      const host = controlsRef.current;
+      if (!host) return null;
+      const rect = host.getBoundingClientRect();
+      const sampleX = Math.max(0, Math.floor(rect.left + 18));
+      const sampleY = Math.max(0, Math.floor(rect.top + 18));
+      const prevPointer = host.style.pointerEvents;
+      host.style.pointerEvents = "none";
+      const el = document.elementFromPoint(sampleX, sampleY) as HTMLElement | null;
+      host.style.pointerEvents = prevPointer;
+      let cur: HTMLElement | null = el;
+      while (cur && cur !== document.body) {
+        const cs = window.getComputedStyle(cur);
+        const bg = cs.backgroundColor;
+        if (bg && bg !== "transparent") return bg;
+        cur = cur.parentElement as HTMLElement | null;
+      }
+      return null;
+    };
+
+    const toRgb = (s: string): [number, number, number, number] | null => {
+      const m = s.match(/rgba?\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)(?:\s*,\s*(\d*\.?\d+))?\)/i);
+      if (!m) return null;
+      const r = Number(m[1]);
+      const g = Number(m[2]);
+      const b = Number(m[3]);
+      const a = m[4] !== undefined ? Number(m[4]) : 1;
+      return [r, g, b, a];
+    };
+
+    const luminance = (r: number, g: number, b: number): number => {
+      const srgb = [r, g, b].map((v) => v / 255).map((v) => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)));
+      return 0.2126 * srgb[0] + 0.7152 * srgb[1] + 0.0722 * srgb[2];
+    };
+
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const bg = pickBgColor();
+      if (!bg) return;
+      const rgba = toRgb(bg);
+      if (!rgba) return;
+      const lum = luminance(rgba[0], rgba[1], rgba[2]);
+      setUseWhiteIcons(lum < 0.5);
+    };
+    const request = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(update);
+    };
+
+    const sc = scrollRef.current;
+    window.addEventListener("resize", request);
+    window.addEventListener("scroll", request, { passive: true });
+    if (sc) sc.addEventListener("scroll", request, { passive: true } as AddEventListenerOptions);
+    request();
+
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener("resize", request);
+      window.removeEventListener("scroll", request as any);
+      if (sc) sc.removeEventListener("scroll", request as any);
+    };
+  }, []);
 
   const handlePortfolioScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -391,6 +458,7 @@ function FullscreenOverlay({
             height: 0,
             pointerEvents: "none",
             alignSelf: "stretch",
+            marginLeft: "1rem",
           }}
         >
           <div
@@ -400,7 +468,13 @@ function FullscreenOverlay({
               display: "flex",
               gap: "8px",
               pointerEvents: "auto",
+              background: "rgba(255,255,255,0.0)",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+              padding: "0",
+              borderRadius: "9999px",
             }}
+            ref={controlsRef}
           >
             {/* Back chevron */}
             <button
@@ -410,16 +484,16 @@ function FullscreenOverlay({
                 height: "35px",
                 width: "35px",
                 borderRadius: "9999px",
-                background: "rgba(0,0,0,0.05)",
-                border: "1px solid rgba(0,0,0,0)",
+                background: "transparent",
+                border: "1px solid rgba(255,255,255,0.25)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 color: "#111",
               }}
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M15 18l-6-6 6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style={{ color: useWhiteIcons ? "#111111"  : "#ffffff", transition: "color 150ms ease" }}>
+                <path d="M13 18l-6-6 6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
 
@@ -430,15 +504,15 @@ function FullscreenOverlay({
                 height: "35px",
                 width: "35px",
                 borderRadius: "9999px",
-                background: "rgba(0,0,0,0.05)",
-                border: "1px solid rgba(0,0,0,0)",
+                background: "transparent",
+                border: "1px solid rgba(255,255,255,0.25)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 color: "#111",
               }}
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style={{ color: useWhiteIcons ? "#111111"  : "#ffffff", transition: "color 150ms ease" }}>
                 <path d="M19 21 l-7-5 -7 5 V5 a2 2 0 0 1 2-2 h10 a2 2 0 0 1 2 2 z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
@@ -450,15 +524,15 @@ function FullscreenOverlay({
                 height: "35px",
                 width: "35px",
                 borderRadius: "9999px",
-                background: "rgba(0,0,0,0.05)",
-                border: "1px solid rgba(0,0,0,0)",
+                background: "transparent",
+                border: "1px solid rgba(255,255,255,0.25)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 color: "#111",
               }}
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style={{ color: useWhiteIcons ? "#111111"  : "#ffffff", transition: "color 150ms ease" }}>
                 <path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
@@ -499,7 +573,7 @@ function FullscreenOverlay({
                 display: "flex",
                 marginLeft: "2rem",
                 marginRight: "2rem",
-                marginTop: "1rem",
+                marginTop: "2rem",
                 position: "relative",
 
               }}
@@ -568,93 +642,6 @@ function FullscreenOverlay({
               marginRight: "1rem",
             }}
           >
-            {/* bottom buttons row */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: "10px",
-              }}
-            >
-              {/* left add button */}
-              <button
-                aria-label="Add"
-                style={{
-                  height: "35px",
-                  width: "35px",
-                  borderRadius: "9999px",
-                  background: "rgba(0,0,0,0.05)",
-                  border: "1px solid rgba(0,0,0,0)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "#111",
-                }}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M12 5v14M5 12h14"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </button>
-
-              {/* right controls */}
-              <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-                {/* settings */}
-                <button
-                  aria-label="Settings"
-                  style={{
-                    height: "35px",
-                    width: "35px",
-                    borderRadius: "9999px",
-                    background: "rgba(0,0,0,0.05)",
-                    border: "1px solid rgba(0,0,0,0)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "#111",
-                  }}
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M4 6h6M14 6h6M10 6v12M4 18h6M14 18h6M14 18v-8"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </button>
-
-                {/* X button to close the fullscreen overlay */}
-                <button
-                  aria-label="Close"
-                  onClick={handleClose}
-                  style={{
-                    height: "35px",
-                    width: "35px",
-                    borderRadius: "9999px",
-                    background: "rgba(0,0,0,0.05)",
-                    border: "1px solid rgba(0,0,0,0)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "#111",
-                  }}
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M18 6L6 18M6 6l12 12"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
 
             <a
               href={url}
