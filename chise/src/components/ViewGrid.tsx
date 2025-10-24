@@ -382,6 +382,88 @@ function FullscreenOverlay({
         }}
         ref={scrollRef}
       >
+        {/* Sticky top-left floating widget */}
+        <div
+          style={{
+            position: "sticky",
+            top: 12,
+            zIndex: 20000,
+            height: 0,
+            pointerEvents: "none",
+            alignSelf: "stretch",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              left: 12,
+              display: "flex",
+              gap: "8px",
+              pointerEvents: "auto",
+            }}
+          >
+            {/* Back chevron */}
+            <button
+              aria-label="Back"
+              onClick={handleClose}
+              style={{
+                height: "35px",
+                width: "35px",
+                borderRadius: "9999px",
+                background: "rgba(0,0,0,0.05)",
+                border: "1px solid rgba(0,0,0,0)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#111",
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M15 18l-6-6 6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+
+            {/* Save / bookmark */}
+            <button
+              aria-label="Save"
+              style={{
+                height: "35px",
+                width: "35px",
+                borderRadius: "9999px",
+                background: "rgba(0,0,0,0.05)",
+                border: "1px solid rgba(0,0,0,0)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#111",
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M19 21 l-7-5 -7 5 V5 a2 2 0 0 1 2-2 h10 a2 2 0 0 1 2 2 z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+
+            {/* Message icon */}
+            <button
+              aria-label="Message"
+              style={{
+                height: "35px",
+                width: "35px",
+                borderRadius: "9999px",
+                background: "rgba(0,0,0,0.05)",
+                border: "1px solid rgba(0,0,0,0)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#111",
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          </div>
+        </div>
         {/* Top row: media + sidebar */}
         <div
           style={{
