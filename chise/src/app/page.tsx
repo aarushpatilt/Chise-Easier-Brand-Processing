@@ -163,14 +163,14 @@ export default function Home() {
       >
 
         {/* Title */}
-        <h1
+        {/* <h1
           ref={exploreRef}
           className="reveal reveal--out"
           style={{
             // fontFamily: "var(--font-cormorant-garamond)",
             color: "var(--foreground)",
             fontWeight: 500,
-            fontSize: "2rem",
+            fontSize: "1rem",
             letterSpacing: "0.01em",
             lineHeight: 0.9,
             marginTop: "1rem",
@@ -178,7 +178,7 @@ export default function Home() {
           }}
         >
           BRANDS
-        </h1>
+        </h1> */}
 
         {/* Subtitle */}
         {/* <p
@@ -218,7 +218,7 @@ export default function Home() {
       </section>
 
       {/* Fixed Search Bar */}
-      <div
+      {/* <div
         style={{
           position: "fixed",
           bottom: "1rem",
@@ -234,7 +234,7 @@ export default function Home() {
         }}
       >
         <SearchBar />
-      </div>
+      </div> */}
     </>
   );
 }

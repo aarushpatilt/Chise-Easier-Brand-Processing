@@ -35,13 +35,30 @@ export default function ViewGrid({
     "Beauty",
   ];
   const [selectedCategory, setSelectedCategory] = useState<string>(categories[0]);
+  const categoriesContainerRef = useRef<HTMLDivElement | null>(null);
+  const categoryRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const [indicator, setIndicator] = useState<{ left: number; width: number }>({ left: 0, width: 0 });
+
+  useEffect(() => {
+    const updateIndicator = () => {
+      const el = categoryRefs.current[selectedCategory];
+      const container = categoriesContainerRef.current;
+      if (!el || !container) return;
+      const left = el.offsetLeft;
+      const width = el.offsetWidth;
+      setIndicator({ left, width });
+    };
+    updateIndicator();
+    window.addEventListener("resize", updateIndicator);
+    return () => window.removeEventListener("resize", updateIndicator);
+  }, [selectedCategory]);
 
   return (
     <div
       style={{
         width: "100%",
-        paddingLeft: "1rem",
-        paddingRight: "1rem",
+        paddingLeft: "2rem",
+        paddingRight: "2rem",
       }}
     >
       {/* Categories row */}
@@ -52,7 +69,10 @@ export default function ViewGrid({
           flexWrap: "wrap",
           alignItems: "center",
           marginBottom: "2rem",
+          position: "relative",
+          paddingBottom: "0.75rem",
         }}
+        ref={categoriesContainerRef}
       >
         {categories.map((label) => {
           const isSelected = selectedCategory === label;
@@ -62,15 +82,18 @@ export default function ViewGrid({
               aria-label={label}
               aria-pressed={isSelected}
               onClick={() => setSelectedCategory(label)}
+              ref={(el) => {
+                categoryRefs.current[label] = el;
+              }}
               style={{
-                height: isSelected ? "36px" : "auto",
-                padding: isSelected ? "0 14px" : "0",
-                borderRadius: isSelected ? "20px" : "0",
-                background: isSelected ? "rgba(0,0,0,0.06)" : "transparent",
+                height: "auto",
+                padding: 0,
+                borderRadius: 0,
+                background: "transparent",
                 border: 0,
                 color: "#111",
                 opacity: isSelected ? 1 : 0.5,
-                fontSize: "0.9rem",
+                fontSize: "0.85rem",
                 fontWeight: 500,
                 cursor: "pointer",
               }}
@@ -79,6 +102,32 @@ export default function ViewGrid({
             </button>
           );
         })}
+        {/* underline indicator */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: -1,
+            left: `${indicator.left}px`,
+            width: `${indicator.width}px`,
+            height: "3px",
+            background: "#111",
+            borderRadius: "2px",
+            transition: "left 220ms ease, width 220ms ease",
+          }}
+          aria-hidden
+        />
+        {/* full-width baseline ignoring container padding */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: "calc(50% - 50vw)",
+            width: "100vw",
+            height: "1px",
+            background: "rgba(0,0,0,0.08)",
+          }}
+          aria-hidden
+        />
       </div>
       <div
         style={{
@@ -569,7 +618,7 @@ function FullscreenOverlay({
                 borderRadius: "20px",
                 overflow: "hidden",
                 background: "#fff",
-                boxShadow: "0 8px 40px rgba(0,0,0,0.12)",
+                // boxShadow: "0 8px 40px rgba(0,0,0,0.12)",
                 display: "flex",
                 marginLeft: "2rem",
                 marginRight: "2rem",
@@ -599,8 +648,8 @@ function FullscreenOverlay({
                 padding: "0 18px",
                 borderRadius: "9999px",
                 background: "var(--theme-color)",
-                border: "1px solid rgba(255,255,255,0.35)",
-                boxShadow: "0 4px 16px rgba(10,32,112,0.22)",
+    
+            
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -631,7 +680,8 @@ function FullscreenOverlay({
             style={{
               width: "40%",
               height: "95%",
-              background: "#fff",
+              background: "rgba(255,255,255,0.1)",
+             
               borderRadius: "20px",
               color: "#111",
               padding: "1.25rem 1.5rem",
@@ -652,7 +702,7 @@ function FullscreenOverlay({
                 fontWeight: 600,
                 marginBottom: "0.5rem",
                 color: "#111",
-                marginTop: "1rem",
+                marginTop: "0rem",
                 textDecoration: "underline",
               }}
             >

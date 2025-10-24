@@ -23,7 +23,7 @@ export default function TopNav() {
         left: 0,
         width: "100%",
         height: "5rem",
-        backgroundColor: isScrolled ? "rgba(255,255,255,1)" : "transparent",
+        backgroundColor: isScrolled ? "var(--background)" : "transparent",
         backdropFilter: isScrolled ? "blur(16px)" : "blur(0px)",
         WebkitBackdropFilter: isScrolled ? "blur(16px)" : "blur(0px)",
         boxShadow: "none",
@@ -34,36 +34,97 @@ export default function TopNav() {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        paddingLeft: "2rem",
-        paddingRight: "2rem",
+        paddingLeft: "3rem",
+        paddingRight: "3rem",
       }}
     >
-      {/* left: hamburger */}
-      <div style={{ display: "flex", gap: "1rem", alignItems: "center", flex: 1 }}>
-        <button aria-label="Open menu" style={{ background: "transparent", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" style={{ color: "var(--foreground)" }}>
-            <path d="M4 6h16M4 12h16M4 18h16" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-        </button>
-      </div>
+      {/* left: brand + tabs */}
+      <div style={{ display: "flex", gap: "1.5rem", alignItems: "center", flex: 1 }}>
+        <span
+          style={{
+            fontFamily: "var(--font-cormorant-garamond)",
+            color: "var(--theme-color)",
+            fontSize: "1.5rem",
+            lineHeight: 1,
+            letterSpacing: "0.02em",
+            fontWeight: 700,
+          }}
+        >
+          CHISE
+        </span>
 
-      {/* center title */}
-      <span
+        <h1
+          style={{
+            color: "var(--foreground)",
+            fontWeight: 500,
+            fontSize: "0.9rem",
+            letterSpacing: "0.01em",
+            lineHeight: 0.9,
+            marginTop: 0,
+          }}
+        >
+          Brands
+        </h1>
+        <h1
+          style={{
+            color: "var(--foreground)",
+            fontWeight: 500,
+            fontSize: "0.9rem",
+            opacity: 0.5,
+            letterSpacing: "0.01em",
+            lineHeight: 0.9,
+            marginTop: 0,
+          }}
+        >
+          Partners
+        </h1>
+
+        
+      </div>
+      {/* center: search */}
+      <div
         style={{
-          fontFamily: "var(--font-cormorant-garamond)",
-          color: "var(--theme-color)",
-          fontSize: "1.5rem",
-          lineHeight: "0.75",
-          letterSpacing: "0.02em",
-          fontWeight: "600",
-          display: "block",
-          textAlign: "center",
+          flex: 1,
+          maxWidth: "40rem",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
-        CHISE
-        <br />
-        MARKETPLACE
-      </span>
+        <div
+          style={{
+            width: "100%",
+            maxWidth: "34rem",
+            borderRadius: "24px",
+            background: "rgba(58, 50, 255, 0.18)",
+            // boxShadow: "0 8px 24px rgba(31,38,135,0.18)",
+            backdropFilter: "blur(14px) saturate(140%)",
+            WebkitBackdropFilter: "blur(14px) saturate(140%)",
+            border: "0px solid rgba(58, 50, 255, 0.25)",
+            padding: "8px 12px",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+          }}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style={{ color: "#fff", opacity: 0.9 }}>
+            <circle cx="11" cy="11" r="7" strokeWidth="2" />
+            <path d="M21 21l-4.3-4.3" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+          <input
+            type="text"
+            placeholder="Search..."
+            style={{
+              background: "transparent",
+              border: "none",
+              outline: "none",
+              width: "100%",
+              height: "28px",
+              fontSize: "0.9rem",
+              color: "#fff",
+            }}
+          />
+        </div>
+      </div>
 
       {/* right controls */}
       <div style={{ display: "flex", gap: "1.35rem", alignItems: "center", justifyContent: "flex-end", flex: 1 }}>
