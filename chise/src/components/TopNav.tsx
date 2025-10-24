@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useId, useRef } from "react";
+import Link from "next/link";
 
 export default function TopNav() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -153,7 +154,7 @@ export default function TopNav() {
       {/* right controls */}
       <div style={{ display: "flex", gap: "1.35rem", alignItems: "center", justifyContent: "flex-end", flex: 1 }}>
         {/* Create button */}
-        <button
+        <Link href="/create"
           style={{
             height: "2.25rem",
             borderRadius: "20px",
@@ -164,10 +165,14 @@ export default function TopNav() {
             cursor: "pointer",
             paddingLeft: "0.75rem",
             paddingRight: "0.75rem",
+            alignItems: "center",
+            justifyContent: "center",
+            textDecoration: "none",
+            display: "inline-flex",
           }}
         >
           Create
-        </button>
+        </Link>
 
         {/* Lightning icon */}
         <button aria-label="Lightning" style={{ background: "transparent", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
