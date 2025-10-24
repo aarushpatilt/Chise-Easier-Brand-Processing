@@ -49,7 +49,7 @@ export default function TopNav() {
         left: 0,
         width: "100%",
         height: "auto",
-        backgroundColor: isScrolled ? "var(--background)" : "transparent",
+        backgroundColor: isScrolled ? "rgba(246,244,238,0.5)" : "transparent",
         backdropFilter: isScrolled ? "blur(16px)" : "blur(0px)",
         WebkitBackdropFilter: isScrolled ? "blur(16px)" : "blur(0px)",
         boxShadow: "none",
