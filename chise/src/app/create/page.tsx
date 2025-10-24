@@ -206,7 +206,7 @@ export default function CreateProjectPage() {
         marginRight: "2rem",
 
         
-        minHeight: "100vh",
+        minHeight: "95vh",
       }}
     >
       {/* Floating controls (Back + Save) independent of page layout */}
@@ -281,6 +281,7 @@ export default function CreateProjectPage() {
           flexDirection: "column",
           gap: "1rem",
           marginTop: "3rem",
+          marginLeft: "1rem",
         }}
       >
         <div
@@ -289,7 +290,7 @@ export default function CreateProjectPage() {
           onDragLeave={handleDragLeave}
           style={{
             background: "rgba(0,0,0,0.035)",
-            border: "1px solid rgba(0,0,0,0.06)",
+            border: "0px solid transparent",
             borderRadius: "24px",
             padding: hasItems ? "0" : "2rem 1.25rem",
             minHeight: "60vh",
@@ -303,7 +304,7 @@ export default function CreateProjectPage() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: "1rem",
+              gap: 0,
             }}
           >
             {!hasItems && (
@@ -356,7 +357,7 @@ export default function CreateProjectPage() {
      
           height: "95vh",
           position: "sticky",
-          top: "0rem",
+          top: "1rem",
         }}
       >
         <div
@@ -383,52 +384,73 @@ export default function CreateProjectPage() {
             <div style={{ background: "rgba(0,0,0,0.05)", color: "#111", borderRadius: "20px", padding: "0.24rem 0.7rem", fontWeight: 500, fontSize: "0.7rem", display: "flex", alignItems: "center", minHeight: "1.2rem" }}>Video/Audio</div>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", marginTop: "0.25rem" }}>
-            <button
-              onClick={() => inputImageRef.current?.click()}
-              style={{ height: "44px", borderRadius: "12px", background: "var(--theme-color)", color: "#fff", fontWeight: 600, border: 0, cursor: "pointer" }}
-            >
-              Upload Image
-            </button>
-            <input ref={inputImageRef} type="file" accept="image/*" multiple onChange={(e) => onFiles(e.target.files)} style={{ display: "none" }} />
-
-            <button
-              onClick={() => inputVideoRef.current?.click()}
-              style={{ height: "44px", borderRadius: "12px", background: "#111", color: "#fff", fontWeight: 600, border: 0, cursor: "pointer" }}
-            >
-              Upload Video / Audio
-            </button>
-            <input ref={inputVideoRef} type="file" accept="video/*,audio/*" multiple onChange={(e) => onFiles(e.target.files)} style={{ display: "none" }} />
-          </div>
+          {/* inputs moved to bottom actions */}
 
           <hr style={{ border: "none", borderTop: "1px solid rgba(0,0,0,0.11)", margin: "1.2rem 0", width: "100%" }} />
 
           <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginTop: "auto" }}>
-            <div style={{ display: "flex", gap: "0.6rem" }}>
-              <Link
-                href="/"
-                style={{
-                  flex: 1,
-                  textDecoration: "none",
-                  color: "#111",
-                }}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+              <button
+                onClick={() => inputImageRef.current?.click()}
+                style={{ background: "transparent", border: 0, padding: 0, cursor: "pointer", textAlign: "left" }}
               >
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.7rem 0.9rem", background: "rgba(0,0,0,0.05)", border: "1px solid rgba(0,0,0,0.0)", borderRadius: "14px" }}>
-                  <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "#e5e5e5" }} />
+                  <div
+                    style={{
+                      width: "32px",
+                      height: "32px",
+                      borderRadius: "50%",
+                      backgroundImage: "url('https://cdn.cosmos.so/ce8cf745-50c1-4e89-99a7-9ac7dbd0a5ca?format=jpeg')",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  />
                   <div style={{ display: "flex", flexDirection: "column" }}>
-                    <span style={{ color: "#111", fontSize: "0.9rem" }}>Cancel</span>
+                    <span style={{ color: "#111", fontSize: "0.9rem" }}>Upload Image</span>
                   </div>
                 </div>
-              </Link>
+              </button>
+              <input ref={inputImageRef} type="file" accept="image/*" multiple onChange={(e) => onFiles(e.target.files)} style={{ display: "none" }} />
+
+              <button
+                onClick={() => inputVideoRef.current?.click()}
+                style={{ background: "transparent", border: 0, padding: 0, cursor: "pointer", textAlign: "left" }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.7rem 0.9rem", background: "rgba(0,0,0,0.05)", border: "1px solid rgba(0,0,0,0.0)", borderRadius: "14px" }}>
+                  <div
+                    style={{
+                      width: "32px",
+                      height: "32px",
+                      borderRadius: "50%",
+                      backgroundImage: "url('https://cdn.cosmos.so/ce8cf745-50c1-4e89-99a7-9ac7dbd0a5ca?format=jpeg')",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  />
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <span style={{ color: "#111", fontSize: "0.9rem" }}>Upload Video / Audio</span>
+                  </div>
+                </div>
+              </button>
+              <input ref={inputVideoRef} type="file" accept="video/*,audio/*" multiple onChange={(e) => onFiles(e.target.files)} style={{ display: "none" }} />
 
               <button
                 onClick={() => alert("This is a front-end mock. Persisting is not wired yet.")}
-                style={{ flex: 1, background: "transparent", border: 0, padding: 0, cursor: "pointer" }}
+                style={{ flex: 1, background: "transparent", border: 0, padding: 0, cursor: "pointer", textAlign: "left" }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.7rem 0.9rem", background: "var(--theme-color)", border: "1px solid rgba(0,0,0,0.0)", borderRadius: "14px", color: "#fff" }}>
-                  <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "rgba(255,255,255,0.35)" }} />
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.7rem 0.9rem", background: "rgba(0,0,0,0.05)", border: "1px solid rgba(0,0,0,0.0)", borderRadius: "14px" }}>
+                  <div
+                    style={{
+                      width: "32px",
+                      height: "32px",
+                      borderRadius: "50%",
+                      backgroundImage: "url('https://cdn.cosmos.so/ce8cf745-50c1-4e89-99a7-9ac7dbd0a5ca?format=jpeg')",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  />
                   <div style={{ display: "flex", flexDirection: "column" }}>
-                    <span style={{ fontSize: "0.9rem" }}>Publish</span>
+                    <span style={{ color: "#111", fontSize: "0.9rem" }}>Publish</span>
                   </div>
                 </div>
               </button>
