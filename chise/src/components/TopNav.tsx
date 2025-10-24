@@ -1,10 +1,24 @@
 "use client";
 
-import { useEffect, useState, useId } from "react";
+import { useEffect, useState, useId, useRef } from "react";
 
 export default function TopNav() {
   const [isScrolled, setIsScrolled] = useState(false);
   const gradientId = useId();
+  const categories = [
+    "Clothing",
+    "Drinks",
+    "Makeup",
+    "Fashion",
+    "Electronics",
+    "Home",
+    "Accessories",
+    "Beauty",
+  ];
+  const [selectedCategory, setSelectedCategory] = useState<string>(categories[0]);
+  const categoriesContainerRef = useRef<HTMLDivElement | null>(null);
+  const categoryRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const [indicator, setIndicator] = useState<{ left: number; width: number }>({ left: 0, width: 0 });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +29,18 @@ export default function TopNav() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const updateIndicator = () => {
+      const el = categoryRefs.current[selectedCategory];
+      const container = categoriesContainerRef.current;
+      if (!el || !container) return;
+      setIndicator({ left: el.offsetLeft, width: el.offsetWidth });
+    };
+    updateIndicator();
+    window.addEventListener("resize", updateIndicator);
+    return () => window.removeEventListener("resize", updateIndicator);
+  }, [selectedCategory]);
+
   return (
     <nav
       style={{
@@ -22,7 +48,7 @@ export default function TopNav() {
         top: 0,
         left: 0,
         width: "100%",
-        height: "5rem",
+        height: "auto",
         backgroundColor: isScrolled ? "var(--background)" : "transparent",
         backdropFilter: isScrolled ? "blur(16px)" : "blur(0px)",
         WebkitBackdropFilter: isScrolled ? "blur(16px)" : "blur(0px)",
@@ -30,14 +56,12 @@ export default function TopNav() {
         transition:
           "background-color 200ms ease, backdrop-filter 200ms ease, -webkit-backdrop-filter 200ms ease, box-shadow 200ms ease",
         zIndex: 100,
-
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
+        display: "block",
         paddingLeft: "3rem",
         paddingRight: "3rem",
       }}
     >
+      <div style={{ display: "flex", gap: "1rem", alignItems: "center", justifyContent: "space-between", minHeight: "5rem" }}>
       {/* left: brand + tabs */}
       <div style={{ display: "flex", gap: "1.5rem", alignItems: "center", flex: 1 }}>
         <span
@@ -182,6 +206,75 @@ export default function TopNav() {
             </svg>
           </button>
         </div>
+      </div>
+      </div>
+
+      {/* categories row */}
+      <div
+        style={{
+          display: "flex",
+          gap: "3.5rem",
+          flexWrap: "wrap",
+          alignItems: "center",
+          position: "relative",
+          paddingBottom: "1rem",
+          marginTop: "2rem",
+        
+        }}
+        ref={categoriesContainerRef}
+      >
+        {categories.map((label) => {
+          const isSelected = selectedCategory === label;
+          return (
+            <button
+              key={label}
+              aria-label={label}
+              aria-pressed={isSelected}
+              onClick={() => setSelectedCategory(label)}
+              ref={(el) => {
+                categoryRefs.current[label] = el;
+              }}
+              style={{
+                height: "auto",
+                padding: 0,
+                borderRadius: 0,
+                background: "transparent",
+                border: 0,
+                color: "#111",
+                opacity: isSelected ? 1 : 0.5,
+                fontSize: "0.85rem",
+                fontWeight: 500,
+                cursor: "pointer",
+              }}
+            >
+              {label}
+            </button>
+          );
+        })}
+        <div
+          style={{
+            position: "absolute",
+            bottom: -1,
+            left: `${indicator.left}px`,
+            width: `${indicator.width}px`,
+            height: "3px",
+            background: "#111",
+            borderRadius: "2px",
+            transition: "left 220ms ease, width 220ms ease",
+          }}
+          aria-hidden
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: "calc(50% - 50vw)",
+            width: "100vw",
+            height: "0px",
+            background: "rgba(0,0,0,0.08)",
+          }}
+          aria-hidden
+        />
       </div>
     </nav>
   );

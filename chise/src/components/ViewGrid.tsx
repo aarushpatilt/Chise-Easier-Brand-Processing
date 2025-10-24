@@ -15,7 +15,7 @@ type ViewGridProps = {
 
 export default function ViewGrid({
   urls,
-  cols = 4,
+  cols = 3,
   rows = 4,
   gapPx = 15,
   interactive = false,
@@ -24,34 +24,7 @@ export default function ViewGrid({
   const capacity = cols * rows;
   const items = useMemo(() => urls.slice(0, capacity), [urls, capacity]);
   const [activeUrl, setActiveUrl] = useState<string | null>(null);
-  const categories = [
-    "Clothing",
-    "Drinks",
-    "Makeup",
-    "Fashion",
-    "Electronics",
-    "Home",
-    "Accessories",
-    "Beauty",
-  ];
-  const [selectedCategory, setSelectedCategory] = useState<string>(categories[0]);
-  const categoriesContainerRef = useRef<HTMLDivElement | null>(null);
-  const categoryRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  const [indicator, setIndicator] = useState<{ left: number; width: number }>({ left: 0, width: 0 });
 
-  useEffect(() => {
-    const updateIndicator = () => {
-      const el = categoryRefs.current[selectedCategory];
-      const container = categoriesContainerRef.current;
-      if (!el || !container) return;
-      const left = el.offsetLeft;
-      const width = el.offsetWidth;
-      setIndicator({ left, width });
-    };
-    updateIndicator();
-    window.addEventListener("resize", updateIndicator);
-    return () => window.removeEventListener("resize", updateIndicator);
-  }, [selectedCategory]);
 
   return (
     <div
@@ -61,74 +34,7 @@ export default function ViewGrid({
         paddingRight: "2rem",
       }}
     >
-      {/* Categories row */}
-      <div
-        style={{
-          display: "flex",
-          gap: "3.5rem",
-          flexWrap: "wrap",
-          alignItems: "center",
-          marginBottom: "2rem",
-          position: "relative",
-          paddingBottom: "0.75rem",
-        }}
-        ref={categoriesContainerRef}
-      >
-        {categories.map((label) => {
-          const isSelected = selectedCategory === label;
-          return (
-            <button
-              key={label}
-              aria-label={label}
-              aria-pressed={isSelected}
-              onClick={() => setSelectedCategory(label)}
-              ref={(el) => {
-                categoryRefs.current[label] = el;
-              }}
-              style={{
-                height: "auto",
-                padding: 0,
-                borderRadius: 0,
-                background: "transparent",
-                border: 0,
-                color: "#111",
-                opacity: isSelected ? 1 : 0.5,
-                fontSize: "0.85rem",
-                fontWeight: 500,
-                cursor: "pointer",
-              }}
-            >
-              {label}
-            </button>
-          );
-        })}
-        {/* underline indicator */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: -1,
-            left: `${indicator.left}px`,
-            width: `${indicator.width}px`,
-            height: "3px",
-            background: "#111",
-            borderRadius: "2px",
-            transition: "left 220ms ease, width 220ms ease",
-          }}
-          aria-hidden
-        />
-        {/* full-width baseline ignoring container padding */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: "calc(50% - 50vw)",
-            width: "100vw",
-            height: "1px",
-            background: "rgba(0,0,0,0.08)",
-          }}
-          aria-hidden
-        />
-      </div>
+
       <div
         style={{
           display: "grid",

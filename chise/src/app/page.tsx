@@ -157,7 +157,7 @@ export default function Home() {
           position: "relative",
           borderTop: "0px solid var(--theme-color)",
           padding: "0rem 3rem 2rem 2rem",
-          marginTop: "5rem",
+          marginTop: "10rem",
         }}
         id="explore"
       >
@@ -196,6 +196,20 @@ export default function Home() {
 
 
       </section>
+
+      {/* <div
+        style={{
+          fontSize: "2rem",
+          fontWeight: 300,
+          color: "var(--foreground)",
+          letterSpacing: "0.01em",
+          fontFamily: "var(--font-cormorant-garamond)",
+          marginLeft: "3rem",
+          marginBottom: "1rem",
+        }}
+      >
+        Latest
+      </div> */}
 
       {/* ViewGrid below landing section */}
       <section ref={gridRef} className="reveal reveal--out" style={{ paddingLeft: "1rem", paddingRight: "1rem" }}>
