@@ -79,12 +79,64 @@ function GridCell({
 }) {
   const [showImageFallback, setShowImageFallback] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const timeoutRef = useRef<number | null>(null);
 
   const screenshotUrl = useMemo(() => {
     const encoded = encodeURIComponent(url);
     return `https://s0.wp.com/mshots/v1/${encoded}?w=1200`;
   }, [url]);
+
+  const label = useMemo(() => {
+    try {
+      const u = new URL(url);
+      const hostname = u.hostname.replace(/^www\./, "");
+      return hostname.split(".")[0];
+    } catch {
+      return url;
+    }
+  }, [url]);
+
+  // Deterministic pseudo-random helpers seeded by URL
+  const seed = useMemo(() => {
+    let h = 2166136261;
+    for (let i = 0; i < url.length; i++) {
+      h ^= url.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return (h >>> 0) || 1;
+  }, [url]);
+
+  const rand01 = (offset: number) => {
+    const n = seed + offset * 374761393;
+    const x = Math.sin(n) * 10000;
+    return x - Math.floor(x);
+  };
+
+  const rating = useMemo(() => {
+    const r = 3.8 + rand01(1) * 1.2; // 3.8 - 5.0
+    return Math.round(r * 10) / 10;
+  }, [seed]);
+
+  const price = useMemo(() => {
+    const p = 500 + rand01(2) * 4500; // $500 - $5000
+    const rounded = Math.round(p / 50) * 50; // round to nearest $50
+    return rounded;
+  }, [seed]);
+
+  const avatarGradient = useMemo(() => {
+    const h1 = Math.floor(rand01(3) * 360);
+    const h2 = (h1 + 40 + Math.floor(rand01(4) * 80)) % 360;
+    const s1 = 85;
+    const l1 = 60;
+    const s2 = 85;
+    const l2 = 55;
+    return `linear-gradient(135deg, hsl(${h1} ${s1}% ${l1}%), hsl(${h2} ${s2}% ${l2}%))`;
+  }, [seed]);
+
+  const formattedPrice = useMemo(() => {
+    return `$${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+  }, [price]);
 
   useEffect(() => {
     if (useScreenshot) return; // ✅ skip iframe fallback logic if using screenshots
@@ -97,93 +149,135 @@ function GridCell({
   }, [url, iframeLoaded, useScreenshot]);
 
   return (
-    <div
-      style={{
-        position: "relative",
-        width: "100%",
-        aspectRatio: "16 / 10",
-        borderRadius: "20px",
-        overflow: "hidden",
-        background: "transparent",
-        // boxShadow: "0 4px 16px rgba(0,0,0,0.05)",
-        border: "0.5px solid rgba(255,255,255,0.06)",
-        cursor: "pointer",
-      }}
-      onClick={() => onOpen(url)}
-    >
-      {/* ✅ Choose between screenshot or live iframe */}
-      {useScreenshot ? (
-        <img
-          src={screenshotUrl}
-          alt={url}
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            display: "block",
-          }}
-          loading="lazy"
-        />
-      ) : !showImageFallback ? (
-        <iframe
-          src={url}
-          title={url}
-          onLoad={() => {
-            setIframeLoaded(true);
-            if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
-          }}
-          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-          referrerPolicy="no-referrer"
-          style={{
-            width: "100%",
-            height: "100%",
-            border: "0",
-            pointerEvents: interactive ? "auto" : "none",
-          }}
-        />
-      ) : (
-        <img
-          src={screenshotUrl}
-          alt={url}
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            display: "block",
-          }}
-          loading="lazy"
-        />
-      )}
-
+    <div style={{ display: "flex", flexDirection: "column" }}>
       <div
         style={{
-          position: "absolute",
-          left: 8,
-          bottom: 8,
-          padding: "4px 8px",
+          position: "relative",
+          width: "100%",
+          aspectRatio: "16 / 11",
           borderRadius: "20px",
-          background: "rgba(0,0,0,0.55)",
-          backdropFilter: "blur(10px)",
-          color: "#fff",
-          fontSize: "0.75rem",
-          maxWidth: "90%",
           overflow: "hidden",
-          whiteSpace: "nowrap",
-          textOverflow: "ellipsis",
+          background: "transparent",
+          // boxShadow: "0 4px 16px rgba(0,0,0,0.05)",
+          border: "0.5px solid rgba(255,255,255,0.06)",
+          cursor: "pointer",
         }}
-        title={url}
+        onClick={() => onOpen(url)}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
       >
-        {(() => {
-          try {
-            const u = new URL(url);
-            let hostname = u.hostname.replace(/^www\./, "");
-            // Remove anything after the first '.' (including the dot itself)
-            const base = hostname.split(".")[0];
-            return base;
-          } catch {
-            return url;
-          }
-        })()}
+        {/* ✅ Choose between screenshot or live iframe */}
+        {useScreenshot ? (
+          <img
+            src={screenshotUrl}
+            alt={url}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+            }}
+            loading="lazy"
+          />
+        ) : !showImageFallback ? (
+          <iframe
+            src={url}
+            title={url}
+            onLoad={() => {
+              setIframeLoaded(true);
+              if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
+            }}
+            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+            referrerPolicy="no-referrer"
+            style={{
+              width: "100%",
+              height: "100%",
+              border: "0",
+              pointerEvents: interactive ? "auto" : "none",
+            }}
+          />
+        ) : (
+          <img
+            src={screenshotUrl}
+            alt={url}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+            }}
+            loading="lazy"
+          />
+        )}
+        <button
+          aria-label="Save"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          style={{
+            position: "absolute",
+            right: 8,
+            bottom: 8,
+            width: 32,
+            height: 32,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "9999px",
+            background: "rgba(0,0,0,0.55)",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+            border: "1px solid rgba(255,255,255,0.25)",
+            color: "#ffffff",
+            opacity: hovered ? 1 : 0,
+            transition: "opacity 180ms ease",
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M19 21 l-7-5 -7 5 V5 a2 2 0 0 1 2-2 h10 a2 2 0 0 1 2 2 z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Caption under tile: avatar + name (left), price then rating (right) */}
+      <div
+        style={{
+          marginTop: "0.5rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          color: "#111",
+          fontWeight: 500,
+          fontSize: "0.85rem",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+        }}
+      >
+        <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", minWidth: 0 }}>
+          <span
+            style={{
+              width: 18,
+              height: 18,
+              borderRadius: "50%",
+              backgroundImage: avatarGradient,
+              flex: "0 0 auto",
+            }}
+            aria-hidden
+          />
+          <span style={{ overflow: "hidden", textOverflow: "ellipsis", opacity: 0.8 }} title={label}>
+            {label}
+          </span>
+        </div>
+
+        <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", opacity: 0.6, flex: "0 0 auto" }}>
+          <span style={{ fontSize: "0.8rem" }}>{formattedPrice}</span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-label="star">
+              <path d="M12 17.25l-6.16 3.73 1.64-7.04L2 9.51l7.19-.61L12 2.5l2.81 6.4 7.19.61-5.48 4.43 1.64 7.04z" strokeWidth="1.5" strokeLinejoin="round" />
+            </svg>
+            <span style={{ fontSize: "0.8rem" }}>{rating.toFixed(1)}</span>
+          </span>
+        </div>
       </div>
     </div>
   );

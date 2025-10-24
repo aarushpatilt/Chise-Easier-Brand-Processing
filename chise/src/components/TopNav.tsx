@@ -223,6 +223,31 @@ export default function TopNav() {
         }}
         ref={categoriesContainerRef}
       >
+        {/* Left-aligned Popular button */}
+        <button
+          aria-label="Popular"
+          style={{
+            height: "2.1rem",
+            paddingLeft: "0.85rem",
+            paddingRight: "0.7rem",
+            borderRadius: "9999px",
+            background: "transparent",
+            border: "1px solid rgba(0,0,0,0.12)",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.35rem",
+            color: "#111",
+            fontSize: "0.85rem",
+            fontWeight: 500,
+            cursor: "pointer",
+          }}
+        >
+          <span>Popular</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden>
+            <path d="M7 10l5 5 5-5" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
         {categories.map((label) => {
           const isSelected = selectedCategory === label;
           return (
@@ -251,6 +276,30 @@ export default function TopNav() {
             </button>
           );
         })}
+
+        {/* Right-aligned Filters button */}
+        <button
+          aria-label="Filters"
+          style={{
+            marginLeft: "auto",
+            height: "2.1rem",
+            paddingLeft: "0.85rem",
+            paddingRight: "0.85rem",
+            borderRadius: "9999px",
+            background: "transparent",
+            border: "1px solid rgba(0,0,0,0.12)",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            color: "#111",
+            fontSize: "0.85rem",
+            fontWeight: 500,
+            cursor: "pointer",
+          }}
+        >
+
+          <span>Filters</span>
+        </button>
         <div
           style={{
             position: "absolute",
@@ -270,7 +319,7 @@ export default function TopNav() {
             bottom: 0,
             left: "calc(50% - 50vw)",
             width: "100vw",
-            height: "0px",
+            height: "1px",
             background: "rgba(0,0,0,0.08)",
           }}
           aria-hidden
